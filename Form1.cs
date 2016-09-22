@@ -16,10 +16,16 @@ namespace FitHeaderReader
 
         string filepath;
         BindingSource datagrid;
+        AboutBox1 about;
 
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PrintProductVersion();
 
             datagrid = new BindingSource();
             datagrid.DataSource = new List<HeaderField>();
@@ -29,6 +35,7 @@ namespace FitHeaderReader
 
             saveToolStripMenuItem.Enabled = false;
             saveAsToolStripMenuItem.Enabled = false;
+
         }
 
         private string readFitsHeader(string file) {
@@ -201,6 +208,20 @@ namespace FitHeaderReader
             Form.ActiveForm.Text = title;
         }
 
+        private void PrintProductVersion()
+        {
+            //String copy = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute), false)).Copyright;
+            versionLabel.Text = "v. " + Application.ProductVersion;
+        }
+
+        private void openAbout() {
+            if (about == null || about.IsDisposed)
+            {
+                about = new AboutBox1();
+            }
+            about.Show();
+        }
+
         private void consoleResultTextBox_TextChanged(object sender, EventArgs e)
         {
             Console.WriteLine("header changed");
@@ -293,6 +314,22 @@ namespace FitHeaderReader
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                this.Hide();
+            } else
+            {
+                this.Show();
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openAbout();
         }
     }
 }
