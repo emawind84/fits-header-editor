@@ -1,4 +1,4 @@
-﻿namespace FitHeaderReader
+﻿namespace FitsHeaderEditor
 {
     partial class Form1
     {

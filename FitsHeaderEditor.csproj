@@ -7,8 +7,8 @@
     <ProjectGuid>{1E016540-E8AD-4F67-957B-068CE1B46BB1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FitHeaderReader</RootNamespace>
-    <AssemblyName>FitHeaderReader</AssemblyName>
+    <RootNamespace>FitsHeaderEditor</RootNamespace>
+    <AssemblyName>FitsHeaderEditor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -76,6 +76,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitHeaderReader", "FitHeaderReader.csproj", "{1E016540-E8AD-4F67-957B-068CE1B46BB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitsHeaderEditor", "FitsHeaderEditor.csproj", "{1E016540-E8AD-4F67-957B-068CE1B46BB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FitHeaderReader")]
-[assembly: AssemblyDescription("Fits Header Editor")]
+[assembly: AssemblyTitle("FitsHeaderEditor")]
+[assembly: AssemblyDescription("Read and Write FITS Header")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Emanuele Disco")]
-[assembly: AssemblyProduct("FitHeaderReader")]
+[assembly: AssemblyProduct("FitsHeaderEditor")]
 [assembly: AssemblyCopyright("GNU General Public License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
