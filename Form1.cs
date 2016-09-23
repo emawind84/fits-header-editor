@@ -14,7 +14,7 @@ namespace FitHeaderReader
     public partial class Form1 : Form
     {
 
-        string filepath;
+        string current_filepath;
         BindingSource datagrid;
         AboutBox1 about;
 
@@ -29,6 +29,7 @@ namespace FitHeaderReader
 
             datagrid = new BindingSource();
             datagrid.DataSource = new List<HeaderField>();
+            datagrid.AllowNew = true;
             dataGridView1.DataSource = datagrid;
             //dataGridView1.Columns[0].HeaderCell.Value = "Key";
             //dataGridView1.Columns[1].HeaderCell.Value = "Value";
@@ -36,13 +37,31 @@ namespace FitHeaderReader
             saveToolStripMenuItem.Enabled = false;
             saveAsToolStripMenuItem.Enabled = false;
 
+            // allow dragging file inside the window
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(Form1_DragEnter);
+            this.DragDrop += new DragEventHandler(Form1_DragDrop);
         }
 
-        private string readFitsHeader(string file) {
+        private void loadFitsHeader(string filepath)
+        {
+            // enable save buttons
+            saveToolStripMenuItem.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
+
+            current_filepath = filepath;  // set filepath global variable to the loaded file
+
+            FileInfo info = new FileInfo(filepath);
+            changeWindowTitle("Open file: " + info.Name);  // change window title
+            var header = readFitsHeader();
+            printFitsHeader(header);
+        }
+
+        private string readFitsHeader() {
             char[] buffer = null;
             StringBuilder resultBuilder = new StringBuilder();
             //Dictionary<string, string> header = new Dictionary<string, string>();
-            FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(current_filepath, FileMode.Open, FileAccess.Read);
 
             // remove all fields from datagrid
             datagrid.Clear();
@@ -54,24 +73,22 @@ namespace FitHeaderReader
                 while (streamReader.ReadBlock(buffer, idx, (int)buffer.Length) != 0)
                 {
                     string result = new string(buffer);
-                    if (result.Substring(8, 2) == "= ")
-                    {
-                        
-                        string key = result.Substring(0, 8);
-                        string value = result.Substring(10, 70);
-                        datagrid.Add(new HeaderField(key, value));
-                        //dataGridView1.Rows.Add(key, value);
-                        //dataGridView1.Refresh();
-                    }
-
-                    //string result = System.Text.Encoding.ASCII.GetString(buffer);
-
-                    resultBuilder.Append(result + Environment.NewLine);
 
                     if (result.Trim() == "END")
                     {
                         break;
                     }
+                    
+                    string key = result.Substring(0, 8);
+                    string value = result.Substring(10, 70);
+                    datagrid.Add(new HeaderField(key, value));
+                    //dataGridView1.Rows.Add(key, value);
+                    //dataGridView1.Refresh();
+                    
+                    //string result = System.Text.Encoding.ASCII.GetString(buffer);
+
+                    resultBuilder.Append(result + Environment.NewLine);
+                    
                 }
                 
             }
@@ -84,48 +101,32 @@ namespace FitHeaderReader
 
         private byte[] updateFitsHeader()
         {
-            char[] buffer = null;
             StringBuilder resultBuilder = new StringBuilder();
-            //Dictionary<string, string> header = new Dictionary<string, string>();
-            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
-
-            using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
+            foreach (HeaderField field in datagrid.List)
             {
-                buffer = new char[80];
-                while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)
-                {
-                    string result = new string(buffer);
-                    string key = result.Substring(0, 8);
-
-                    if (result.Substring(8, 2) == "= " )
-                    {
-                        foreach (HeaderField field in datagrid.List)
-                        {
-                            if (field.key == key)
-                            {
-                                result = field.key + "= " + field.value;
-                                //Console.WriteLine("Updating header {0} = {1}", field.key, field.value);
-                            }
-                        }
-                    }
-                    
-                    resultBuilder.Append(result);
-                    
-                    if (result.Trim() == "END")
-                    {
-                        break;
-                    }
-                }
-
+                if (field.isEmpty()) continue;
+                resultBuilder.Append(field.ToString());
             }
+
+            // add the END keyword to end the header
+            resultBuilder.Append(HeaderField.EndKeyword());
+
+            // fill the right side of END with spaces if required
+            string result = resultBuilder.ToString();
+            int pad_length = result.Length % 2880;
+            result = result.PadRight(result.Length + pad_length);
             
-            return System.Text.Encoding.ASCII.GetBytes(resultBuilder.ToString()); ;
+            return System.Text.Encoding.ASCII.GetBytes(result);
         }
 
         private void writeFitsHeader(string file, string newfile = null) {
             ASCIIEncoding encoding = new ASCIIEncoding();
             //byte[] header = encoding.GetBytes(consoleResultTextBox.Text.Replace(System.Environment.NewLine, ""));
 
+            // commit all editing stuff
+            dataGridView1.EndEdit();
+            dataGridView1.CurrentCell = null;
+            
             byte[] header = updateFitsHeader();
             byte[] data;
 
@@ -157,7 +158,7 @@ namespace FitHeaderReader
         {
             int header_end = 0;
             // extract image data from file
-            using (FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(current_filepath, FileMode.Open, FileAccess.Read))
             {
                 using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
                 {
@@ -188,24 +189,8 @@ namespace FitHeaderReader
             consoleResultTextBox.AppendText(header);
         }
 
-        private string createValue(string value) {
-            char[] buffer = new char[70];
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                try
-                {
-                    buffer[i] = value.Substring(i, 1)[0];
-                } catch (ArgumentOutOfRangeException)
-                {
-                    Console.WriteLine("Value too long {0}", value);
-                }
-            }
-
-            return new string(buffer);
-        }
-
         private void changeWindowTitle(string title) {
-            Form.ActiveForm.Text = title;
+            this.Text = title;
         }
 
         private void PrintProductVersion()
@@ -220,6 +205,20 @@ namespace FitHeaderReader
                 about = new AboutBox1();
             }
             about.Show();
+        }
+
+        private void addHeaderField() {
+            datagrid.AddNew();
+        }
+
+        private void removeHeaderField()
+        {
+            foreach ( DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                if (row.IsNewRow) continue;
+                dataGridView1.Rows.RemoveAt(row.Index);
+            }
+            //datagrid.RemoveCurrent();
         }
 
         private void consoleResultTextBox_TextChanged(object sender, EventArgs e)
@@ -248,13 +247,15 @@ namespace FitHeaderReader
             string value = e.FormattedValue.ToString();
             if (col == 0 && value.Length != 8)
             {
-                e.Cancel = true;
-                dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value.PadRight(8).Substring(0, 8);
+                //e.Cancel = true;
+                //dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
             }
             else if (col == 1 && value.Length != 70)
             {
-                e.Cancel = true;
-                dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value.PadRight(70).Substring(0, 70);
+                //e.Cancel = true;
+                //dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
             }
         }
 
@@ -264,33 +265,15 @@ namespace FitHeaderReader
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
-                // enable save buttons
-                saveToolStripMenuItem.Enabled = true;
-                saveAsToolStripMenuItem.Enabled = true;
-
-                string file = openFileDialog1.FileName;
-
-                filepath = file;  // set filepath global variable to the loaded file
-                changeWindowTitle("Open file: " + file);  // change window title
-
-                try
-                {
-                    byte[] fileInBytes = File.ReadAllBytes(file);
-                    size = fileInBytes.Length;
-                    var header = readFitsHeader(file);
-                    printFitsHeader(header);
-                }
-                catch (IOException)
-                {
-                }
+                loadFitsHeader(openFileDialog1.FileName);
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (filepath != null)
+            if (current_filepath != null)
             {
-                writeFitsHeader(filepath);
+                writeFitsHeader(current_filepath);
             }
         }
 
@@ -299,9 +282,9 @@ namespace FitHeaderReader
             DialogResult result = saveFileDialog1.ShowDialog();
             string newfile = saveFileDialog1.FileName;
 
-            if ( result == DialogResult.OK && filepath != null)
+            if ( result == DialogResult.OK && current_filepath != null)
             {
-                writeFitsHeader(filepath, newfile);
+                writeFitsHeader(current_filepath, newfile);
             }
 
         }
@@ -330,6 +313,43 @@ namespace FitHeaderReader
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openAbout();
+        }
+
+        private void addHeaderFieldButton_Click(object sender, EventArgs e)
+        {
+            addHeaderField();
+        }
+
+        private void removeHeaderFieldButton_Click(object sender, EventArgs e)
+        {
+            removeHeaderField();
+        }
+
+        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            HeaderField field = (HeaderField)e.Row.DataBoundItem;
+            if (field.isMandatory()) e.Cancel = true;
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            //foreach (string file in files) Console.WriteLine(file);
+            Console.WriteLine(files[0]);
+
+            try
+            {
+                loadFitsHeader(files[0]);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
         }
     }
 }
