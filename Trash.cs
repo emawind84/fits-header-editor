@@ -75,5 +75,16 @@ namespace FitsHeaderEditor
 
             return new string(buffer);
         }
+
+        private void printFitsHeader(string header)
+        {
+            /*foreach (KeyValuePair<string, string> entry in header)
+            {
+                consoleResultTextBox.AppendText(entry.Key + " = " + entry.Value);
+                consoleResultTextBox.AppendText(Environment.NewLine);
+            }*/
+            //consoleResultTextBox.Clear();
+            //consoleResultTextBox.AppendText(header);
+        }
     }
 }

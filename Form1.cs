@@ -17,6 +17,7 @@ namespace FitsHeaderEditor
         string current_filepath;
         BindingSource datagrid;
         AboutBox1 about;
+        event EventHandler<List<HeaderField>> HeaderRead;
 
         public Form1()
         {
@@ -41,6 +42,32 @@ namespace FitsHeaderEditor
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
+
+            this.HeaderRead += WriteHeaderOnTextBox;
+            this.HeaderRead += WriteHeaderOnDataGrid;
+        }
+
+        void WriteHeaderOnTextBox(object sender, List<HeaderField> header)
+        {
+            StringBuilder resultBuilder = new StringBuilder();
+            foreach (HeaderField field in header)
+            {
+                resultBuilder.Append(field.ToString() + Environment.NewLine);
+            }
+
+            int count = System.Text.Encoding.ASCII.GetByteCount(resultBuilder.ToString());
+            Console.WriteLine("header bytes count: {0}", count);
+
+            consoleResultTextBox.Clear();
+            consoleResultTextBox.AppendText(resultBuilder.ToString());
+        }
+
+        void WriteHeaderOnDataGrid(object sender, List<HeaderField> header)
+        {
+            // remove all fields from datagrid
+            datagrid.Clear();
+
+            datagrid.DataSource = header;
         }
 
         private void loadFitsHeader(string filepath)
@@ -53,18 +80,13 @@ namespace FitsHeaderEditor
 
             FileInfo info = new FileInfo(filepath);
             changeWindowTitle("Open file: " + info.Name);  // change window title
-            var header = readFitsHeader();
-            printFitsHeader(header);
+            readFitsHeader();
         }
 
-        private string readFitsHeader() {
+        private List<HeaderField> readFitsHeader() {
             char[] buffer = null;
-            StringBuilder resultBuilder = new StringBuilder();
-            //Dictionary<string, string> header = new Dictionary<string, string>();
+            List<HeaderField> header = new List<HeaderField>();
             FileStream fs = new FileStream(current_filepath, FileMode.Open, FileAccess.Read);
-
-            // remove all fields from datagrid
-            datagrid.Clear();
 
             using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
             {
@@ -81,22 +103,14 @@ namespace FitsHeaderEditor
                     
                     string key = result.Substring(0, 8);
                     string value = result.Substring(10, 70);
-                    datagrid.Add(new HeaderField(key, value));
-                    //dataGridView1.Rows.Add(key, value);
-                    //dataGridView1.Refresh();
-                    
-                    //string result = System.Text.Encoding.ASCII.GetString(buffer);
-
-                    resultBuilder.Append(result + Environment.NewLine);
-                    
+                    header.Add(new HeaderField(key, value));
                 }
                 
             }
 
-            int count = System.Text.Encoding.ASCII.GetByteCount(resultBuilder.ToString());
-            Console.WriteLine("header bytes count: {0}", count);
+            HeaderRead(this, header);
 
-            return resultBuilder.ToString();
+            return header;
         }
 
         private byte[] updateFitsHeader()
@@ -179,16 +193,6 @@ namespace FitsHeaderEditor
             return header_end;
         }
 
-        private void printFitsHeader(string header) {
-            /*foreach (KeyValuePair<string, string> entry in header)
-            {
-                consoleResultTextBox.AppendText(entry.Key + " = " + entry.Value);
-                consoleResultTextBox.AppendText(Environment.NewLine);
-            }*/
-            consoleResultTextBox.Clear();
-            consoleResultTextBox.AppendText(header);
-        }
-
         private void changeWindowTitle(string title) {
             this.Text = title;
         }
@@ -215,10 +219,36 @@ namespace FitsHeaderEditor
         {
             foreach ( DataGridViewRow row in dataGridView1.SelectedRows)
             {
+                HeaderField field = (HeaderField)row.DataBoundItem;
+                
+                if (field.isMandatory()) continue;
+
                 if (row.IsNewRow) continue;
+
                 dataGridView1.Rows.RemoveAt(row.Index);
             }
             //datagrid.RemoveCurrent();
+        }
+
+        private void findHeaderField(string value)
+        {
+            DataGridViewRow selectedRow = dataGridView1.CurrentRow;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Selected = false;
+                HeaderField field = (HeaderField)row.DataBoundItem;
+                if (field == null || field.isEmpty()) continue;
+                if (field.key.Trim().Equals(value) || field.value.Trim().Equals(value))
+                {
+                    selectedRow = row;
+                    break;
+                }
+               
+            }
+            
+            if(selectedRow != null)
+                selectedRow.Selected = true;
+
         }
 
         private void consoleResultTextBox_TextChanged(object sender, EventArgs e)
@@ -247,7 +277,9 @@ namespace FitsHeaderEditor
             string value = e.FormattedValue.ToString();
             if (col == 0 && value.Length != 8)
             {
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value.PadRight(8).Substring(0, 8);
+                value = value.PadRight(8).Substring(0, 8);
+                value = value.ToUpper();
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
                 //e.Cancel = true;
                 //dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
             }
@@ -351,5 +383,6 @@ namespace FitsHeaderEditor
             }
             
         }
+
     }
 }
