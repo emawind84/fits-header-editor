@@ -19,19 +19,20 @@ namespace FitsHeaderEditor
         AboutBox1 about;
         event EventHandler<List<HeaderField>> HeaderRead;
 
-        public Form1()
+        public Form1(string filepath = "")
         {
             InitializeComponent();
-        }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+            Application.ApplicationExit += new EventHandler(SaveSettings);
+
             PrintProductVersion();
 
             datagrid = new BindingSource();
             datagrid.DataSource = new List<HeaderField>();
             datagrid.AllowNew = true;
+            dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = datagrid;
+            
             //dataGridView1.Columns[0].HeaderCell.Value = "Key";
             //dataGridView1.Columns[1].HeaderCell.Value = "Value";
 
@@ -45,6 +46,18 @@ namespace FitsHeaderEditor
 
             this.HeaderRead += WriteHeaderOnTextBox;
             this.HeaderRead += WriteHeaderOnDataGrid;
+
+            changeWindowTitle();
+
+            if (filepath != string.Empty)
+            {
+                loadFitsHeader(filepath);
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            trimHeaderValueCheckbox.Checked = Properties.Settings.Default.TrimmedHeaderField; 
         }
 
         void WriteHeaderOnTextBox(object sender, List<HeaderField> header)
@@ -79,7 +92,7 @@ namespace FitsHeaderEditor
             current_filepath = filepath;  // set filepath global variable to the loaded file
 
             FileInfo info = new FileInfo(filepath);
-            changeWindowTitle("Open file: " + info.Name);  // change window title
+            changeWindowTitle(info.Name);  // change window title
             readFitsHeader();
         }
 
@@ -91,8 +104,7 @@ namespace FitsHeaderEditor
             using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
             {
                 buffer = new char[80];
-                int idx = 0;
-                while (streamReader.ReadBlock(buffer, idx, (int)buffer.Length) != 0)
+                while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)
                 {
                     string result = new string(buffer);
 
@@ -193,14 +205,14 @@ namespace FitsHeaderEditor
             return header_end;
         }
 
-        private void changeWindowTitle(string title) {
-            this.Text = title;
+        private void changeWindowTitle(string title = "No FITS loaded") {
+            this.Text = string.Format("{0} - Version {1} - {2}", Application.ProductName, Application.ProductVersion, title);
         }
 
         private void PrintProductVersion()
         {
             //String copy = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute), false)).Copyright;
-            versionLabel.Text = "v. " + Application.ProductVersion;
+            //versionLabel.Text = "v. " + Application.ProductVersion;
         }
 
         private void openAbout() {
@@ -238,7 +250,7 @@ namespace FitsHeaderEditor
                 row.Selected = false;
                 HeaderField field = (HeaderField)row.DataBoundItem;
                 if (field == null || field.isEmpty()) continue;
-                if (field.key.Trim().Equals(value) || field.value.Trim().Equals(value))
+                if (field.Key.Trim().Equals(value) || field.Value.Trim().Equals(value))
                 {
                     selectedRow = row;
                     break;
@@ -384,5 +396,17 @@ namespace FitsHeaderEditor
             
         }
 
+        private void trimHeaderValueCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            HeaderField.Trimmed = trimHeaderValueCheckbox.Checked;
+            Properties.Settings.Default.TrimmedHeaderField = trimHeaderValueCheckbox.Checked;
+            
+            dataGridView1.Refresh();
+        }
+
+        private void SaveSettings(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
     }
 }

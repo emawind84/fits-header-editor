@@ -8,9 +8,42 @@ namespace FitsHeaderEditor
 {
     class HeaderField
     {
-        public string key { get; set; }
+        private static bool trimmed = false;
+        public static bool Trimmed
+        {
+            get
+            {
+                return trimmed;
+            }
+            set
+            {
+                trimmed = value;
+            }
+        }
 
-        public string value { get; set; }
+        private string key;
+        public string Key
+        {
+            get
+            {
+                return key != null ? key : "";
+            }
+            set
+            {
+                key = value;
+            }
+        }
+
+        private string value;
+        public string Value {
+            get {
+                if (Trimmed && value != null) return value.Trim();
+                return value != null ? value : "";
+            }
+            set {
+                this.value = value;
+            }
+        }
 
         public HeaderField() { }
 
@@ -39,13 +72,13 @@ namespace FitsHeaderEditor
 
         public static HeaderField EndKeyword()
         {
-            HeaderField f = new HeaderField("END".PadRight(8), "".PadRight(70));
+            HeaderField f = new HeaderField("END", "");
             return f;
         }
 
         public override string ToString()
         {
-            return this.key + valueIndicator() + this.value;
+            return this.Key.PadRight(8) + valueIndicator() + this.Value.PadRight(70);
         }
 
         private string valueIndicator()

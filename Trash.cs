@@ -37,9 +37,9 @@ namespace FitsHeaderEditor
                     {
                         foreach (HeaderField field in datagrid.List)
                         {
-                            if (field.key == key)
+                            if (field.Key == key)
                             {
-                                result = field.key + "= " + field.value;
+                                result = field.Key + "= " + field.Value;
                                 //Console.WriteLine("Updating header {0} = {1}", field.key, field.value);
                             }
                         }
