@@ -231,12 +231,12 @@ namespace FitsHeaderEditor
         {
             foreach ( DataGridViewRow row in dataGridView1.SelectedRows)
             {
+                // first check if the row is new
+                if (row.IsNewRow) continue;
+
                 HeaderField field = (HeaderField)row.DataBoundItem;
                 
                 if (field.isMandatory()) continue;
-
-                if (row.IsNewRow) continue;
-
                 dataGridView1.Rows.RemoveAt(row.Index);
             }
             //datagrid.RemoveCurrent();

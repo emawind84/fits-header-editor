@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -178,8 +178,8 @@
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle1;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -187,8 +187,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle2;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -224,6 +224,7 @@
             // 
             this.saveFileDialog1.AddExtension = false;
             this.saveFileDialog1.DefaultExt = "fits";
+            this.saveFileDialog1.Filter = "*.fit|*.fits";
             // 
             // menuStrip1
             // 
