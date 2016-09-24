@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.ApplicationServices;
+using System.Collections.ObjectModel;
 
 namespace FitsHeaderEditor
 {
@@ -21,14 +22,13 @@ namespace FitsHeaderEditor
             string[] args = Environment.GetCommandLineArgs();
             SingleInstanceController controller = new SingleInstanceController();
             controller.Run(args);
-            //Application.Run(new Form1(args.Length == 0 ? string.Empty : args[0]));
-
             
         }
     }
 
     public class SingleInstanceController : WindowsFormsApplicationBase
     {
+
         public SingleInstanceController()
         {
             IsSingleInstance = true;
@@ -39,12 +39,18 @@ namespace FitsHeaderEditor
         void this_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
             Form1 form = MainForm as Form1; //My derived form type
-            form.LoadFile(e.CommandLine[1]);
+
+            var args = e.CommandLine;
+            if (args.Count > 1)
+            {
+                form.LoadFile(e.CommandLine[1]);
+            }
         }
 
         protected override void OnCreateMainForm()
         {
-            MainForm = new Form1();
+            var args = this.CommandLineArgs;
+            MainForm = new Form1(args.Count == 1 ? string.Empty : args[1]);
         }
     }
 }

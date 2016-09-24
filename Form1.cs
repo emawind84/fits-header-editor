@@ -173,11 +173,14 @@ namespace FitsHeaderEditor
             resultBuilder.Append(HeaderField.EndKeyword());
 
             // fill the right side of END with spaces if required
-            string result = resultBuilder.ToString();
-            int pad_length = result.Length % 2880;
-            result = result.PadRight(result.Length + pad_length);
             
-            return System.Text.Encoding.ASCII.GetBytes(result);
+            int pad_length = resultBuilder.Length % 2880;
+            if (pad_length != 0)
+            {
+                resultBuilder.Append("".PadRight(2880 - pad_length));
+            }
+
+            return System.Text.Encoding.ASCII.GetBytes(resultBuilder.ToString());
         }
 
         private void writeFitsHeader(string file, string newfile = null) {
@@ -197,6 +200,7 @@ namespace FitsHeaderEditor
                 int header_end = findHeaderLength();
                 
                 data = new byte[fs.Length - header_end];
+                fs.Seek(header_end, SeekOrigin.Begin);
                 fs.Read(data, 0, data.Length);
             }
 
@@ -226,17 +230,26 @@ namespace FitsHeaderEditor
                     char[] buffer = new char[80];
                     while (streamReader.Read(buffer, 0, buffer.Length) != 0)
                     {
+                        header_end += 80;
+                        Console.WriteLine(header_end);
+
                         string f = new string(buffer);
                         if (f.Trim() == "END")
                         {
                             break;
                         }
+                        
                     }
-                    header_end = (int)fs.Position;
+
+                    int pad_length = header_end % 2880;
+                    if (pad_length != 0)
+                    {
+                        header_end += (2880 - pad_length);
+                    }
                 }
 
             }
-
+            Console.WriteLine("header length " + header_end);
             return header_end;
         }
 
