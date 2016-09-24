@@ -8,6 +8,9 @@ namespace FitsHeaderEditor
 {
     class HeaderField
     {
+        // readonly flag
+        private bool ReadOnly { get; set; } = false;
+
         private static bool trimmed = false;
         public static bool Trimmed
         {
@@ -30,7 +33,8 @@ namespace FitsHeaderEditor
             }
             set
             {
-                key = value;
+                if (!isReadOnly())
+                    key = value;
             }
         }
 
@@ -41,16 +45,17 @@ namespace FitsHeaderEditor
                 return value != null ? value : "";
             }
             set {
-                this.value = value;
+                if (!isReadOnly())
+                    this.value = value;
             }
         }
 
         public HeaderField() { }
 
-        public HeaderField(string key, string value)
+        public HeaderField(string key, string value = null)
         {
-            this.key = key;
-            this.value = value;
+            this.key = key == null ? "" : key;
+            this.value = value == null ? "" : value;
         }
 
         public bool isEmpty()
@@ -70,6 +75,11 @@ namespace FitsHeaderEditor
             return tkey == "SIMPLE" || tkey == "END" || tkey == "BITPIX";
         }
 
+        public bool isReadOnly()
+        {
+            return ReadOnly || trimmed;
+        }
+
         public static HeaderField EndKeyword()
         {
             HeaderField f = new HeaderField("END", "");
@@ -78,7 +88,23 @@ namespace FitsHeaderEditor
 
         public override string ToString()
         {
-            return this.Key.PadRight(8) + valueIndicator() + this.Value.PadRight(70);
+            string skey = key;
+            string svalue = value.PadRight(70).Substring(0, 70);
+
+            /*float fvalue; int ivalue;
+            if ( float.TryParse(svalue.Substring(0, 20), out fvalue) )
+            {
+                svalue = fvalue.ToString().PadLeft(20);
+            }
+            else if (int.TryParse(svalue.Substring(0, 20), out ivalue))
+            {
+                svalue = ivalue.ToString().PadLeft(20);
+            }*/
+
+            return 
+                skey.PadRight(8).Substring(0, 8)
+                + valueIndicator() 
+                + svalue.PadRight(70).Substring(0, 70);
         }
 
         private string valueIndicator()
