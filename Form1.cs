@@ -70,6 +70,15 @@ namespace FitsHeaderEditor
             }
         }
 
+        // used to keep a single instance of the application
+        public void LoadFile(string filepath)
+        {
+            if (new FileInfo(filepath).Exists)
+            {
+                loadFitsHeader(new FitsFile(filepath));
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
              
