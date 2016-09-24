@@ -13,3 +13,4 @@ I know there are some application out there that do this little task, but usuall
 
 * See the image inside the FITS files.
 * Edit whatsoever the image inside the FITS files.
+* Any other things not listed in 'What you can do with this application'.
