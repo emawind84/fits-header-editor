@@ -468,7 +468,7 @@ namespace FitsHeaderEditor
         private void fileHistoryListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selected_file = fileHistoryListBox.SelectedItem as FitsFile;
-            if ( selected_file != current_file )
+            if (selected_file != null && selected_file != current_file )
                 loadFitsHeader(selected_file);
         }
 
@@ -485,5 +485,9 @@ namespace FitsHeaderEditor
             }
         }
 
+        private void fileHistoryListClearButton_Click(object sender, EventArgs e)
+        {
+            fileHistoryBS.Clear();
+        }
     }
 }

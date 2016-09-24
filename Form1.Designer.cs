@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -65,6 +65,7 @@
             this.fileHistoryListBox = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.fileHistoryListClearButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -331,8 +332,8 @@
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle3;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -340,8 +341,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle4;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -388,9 +389,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fileHistoryListBox.FormattingEnabled = true;
             this.fileHistoryListBox.HorizontalScrollbar = true;
-            this.fileHistoryListBox.Location = new System.Drawing.Point(548, 78);
+            this.fileHistoryListBox.Location = new System.Drawing.Point(548, 51);
             this.fileHistoryListBox.Name = "fileHistoryListBox";
-            this.fileHistoryListBox.Size = new System.Drawing.Size(194, 290);
+            this.fileHistoryListBox.Size = new System.Drawing.Size(194, 277);
             this.fileHistoryListBox.Sorted = true;
             this.fileHistoryListBox.TabIndex = 27;
             this.fileHistoryListBox.SelectedIndexChanged += new System.EventHandler(this.fileHistoryListBox_SelectedIndexChanged);
@@ -399,7 +400,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(545, 62);
+            this.label2.Location = new System.Drawing.Point(545, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 29;
@@ -410,11 +411,23 @@
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // fileHistoryListClearButton
+            // 
+            this.fileHistoryListClearButton.Location = new System.Drawing.Point(667, 335);
+            this.fileHistoryListClearButton.Name = "fileHistoryListClearButton";
+            this.fileHistoryListClearButton.Size = new System.Drawing.Size(75, 23);
+            this.fileHistoryListClearButton.TabIndex = 30;
+            this.fileHistoryListClearButton.Text = "Clear List";
+            this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
+            this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(754, 542);
+            this.Controls.Add(this.fileHistoryListClearButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.fileHistoryListBox);
@@ -477,6 +490,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Button fileHistoryListClearButton;
     }
 }
 

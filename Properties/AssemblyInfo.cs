@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Read and Write FITS Header")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Emanuele Disco")]
-[assembly: AssemblyProduct("FitsHeaderEditor")]
+[assembly: AssemblyProduct("Fits Header Editor")]
 [assembly: AssemblyCopyright("GNU General Public License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
