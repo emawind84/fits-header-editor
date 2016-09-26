@@ -2,7 +2,7 @@
 
 This is a really small application that allow you to see and edit the primary data array inside Flexible Image Transport System images.
 
-I know there are some application out there that do this little task, but usually you need to go through several menus and several mouse clicks, and not all of them are free. So I made this tool just with the purpose of seeing and editing these information inside the FITS images.
+I know there are some applications out there that do this little task, but usually you need to go through several menus and several mouse clicks, and not all of them are free. So I made this tool just with the purpose of seeing and editing these information inside the FITS images.
 
 ## What you can do with this application:
 
