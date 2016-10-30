@@ -8,6 +8,9 @@ namespace FitsHeaderEditor
 {
     class HeaderField
     {
+        private static string[] NOVALUE_FIELD = { "COMMENT", "HISTORY", "" };
+        private static string[] MANDATORY_FIELD = { "SIMPLE", "END", "BITPIX" };
+
         // readonly flag
         private bool ReadOnly { get; set; } = false;
 
@@ -65,14 +68,12 @@ namespace FitsHeaderEditor
 
         public bool isCommentaryKeyword()
         {
-            string tkey = this.key.Trim();
-            return tkey == "COMMENT" || tkey == "HISTORY" || tkey == "";
+            return NOVALUE_FIELD.Contains(this.key.Trim());
         }
 
         public bool isMandatory()
         {
-            string tkey = this.key.Trim();
-            return tkey == "SIMPLE" || tkey == "END" || tkey == "BITPIX";
+            return MANDATORY_FIELD.Contains(this.key.Trim());
         }
 
         public bool isReadOnly()
@@ -88,29 +89,20 @@ namespace FitsHeaderEditor
 
         public override string ToString()
         {
-            string skey = key;
-            string svalue = value.PadRight(70).Substring(0, 70);
-
-            /*float fvalue; int ivalue;
-            if ( float.TryParse(svalue.Substring(0, 20), out fvalue) )
-            {
-                svalue = fvalue.ToString().PadLeft(20);
-            }
-            else if (int.TryParse(svalue.Substring(0, 20), out ivalue))
-            {
-                svalue = ivalue.ToString().PadLeft(20);
-            }*/
+            int value_end_idx = 70;
+            if (string.IsNullOrEmpty(valueIndicator()))
+                value_end_idx = 72;
 
             return 
-                skey.PadRight(8).Substring(0, 8)
+                key.PadRight(8).Substring(0, 8)
                 + valueIndicator() 
-                + svalue.PadRight(70).Substring(0, 70);
+                + value.PadRight(value_end_idx).Substring(0, value_end_idx);
         }
 
         private string valueIndicator()
         {
-            if (this.key.Trim() == "END") return "  ";
-            if (this.isCommentaryKeyword()) return "  ";
+            if (this.key.Trim() == "END") return "";
+            if (this.isCommentaryKeyword()) return "";
             return "= ";
         }
     }

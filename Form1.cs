@@ -142,14 +142,22 @@ namespace FitsHeaderEditor
                 while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)
                 {
                     string result = new string(buffer);
-
+                    Console.WriteLine("Reading line: {0}", result);
                     if (result.Trim() == "END")
                     {
                         break;
                     }
                     
                     string key = result.Substring(0, 8);
-                    string value = result.Substring(10, 70);
+                    string divisor = result.Substring(8, 2);
+                    int value_start_idx = 10;
+
+                    if (divisor != "= ")  // check if the field has no value
+                    {
+                        value_start_idx = 8;
+                        Console.WriteLine("Found comment: {0}", result);
+                    }
+                    string value = result.Substring(value_start_idx, 70);
                     header.Add(new HeaderField(key, value));
                 }
                 
