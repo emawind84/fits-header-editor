@@ -79,11 +79,6 @@ namespace FitsHeaderEditor
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-             
-        }
-
         void WriteHeaderOnTextBox(object sender, List<HeaderField> header)
         {
             StringBuilder resultBuilder = new StringBuilder();
@@ -121,144 +116,13 @@ namespace FitsHeaderEditor
             saveToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
 
-            current_file = file;  // set file global variable to the loaded file
+            current_file = file ?? throw new Exception("No file currently loaded.").Log();  // set file global variable to the loaded file
             
             changeWindowTitle(file.Name);  // change window title
-            readFitsHeader();
 
-            FitsLoaded(this, file);
-            
-            
-        }
-
-        private List<HeaderField> readFitsHeader() {
-            char[] buffer = null;
-            List<HeaderField> header = new List<HeaderField>();
-            FileStream fs = new FileStream(current_file.FilePath, FileMode.Open, FileAccess.Read);
-
-            using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
-            {
-                buffer = new char[80];
-                while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)
-                {
-                    string result = new string(buffer);
-                    Console.WriteLine("Reading line: {0}", result);
-                    if (result.Trim() == "END")
-                    {
-                        break;
-                    }
-                    
-                    string key = result.Substring(0, 8);
-                    string divisor = result.Substring(8, 2);
-                    int value_start_idx = 10;
-
-                    if (divisor != "= ")  // check if the field has no value
-                    {
-                        value_start_idx = 8;
-                        Console.WriteLine("Found comment: {0}", result);
-                    }
-                    string value = result.Substring(value_start_idx, 70);
-                    header.Add(new HeaderField(key, value));
-                }
-                
-            }
-
+            var header = FitsUtil.ReadFitsHeader(current_file.FilePath);
             HeaderRead(this, header);
-
-            return header;
-        }
-
-        private byte[] updateFitsHeader()
-        {
-            StringBuilder resultBuilder = new StringBuilder();
-            foreach (HeaderField field in headerBS.List)
-            {
-                if (field.isEmpty()) continue;
-                resultBuilder.Append(field.ToString());
-            }
-
-            // add the END keyword to end the header
-            resultBuilder.Append(HeaderField.EndKeyword());
-
-            // fill the right side of END with spaces if required
-            
-            int pad_length = resultBuilder.Length % 2880;
-            if (pad_length != 0)
-            {
-                resultBuilder.Append("".PadRight(2880 - pad_length));
-            }
-
-            return System.Text.Encoding.ASCII.GetBytes(resultBuilder.ToString());
-        }
-
-        private void writeFitsHeader(string file, string newfile = null) {
-            ASCIIEncoding encoding = new ASCIIEncoding();
-            //byte[] header = encoding.GetBytes(consoleResultTextBox.Text.Replace(System.Environment.NewLine, ""));
-
-            // commit all editing stuff
-            dataGridView1.EndEdit();
-            dataGridView1.CurrentCell = null;
-            
-            byte[] header = updateFitsHeader();
-            byte[] data;
-
-            // extract image data from file
-            using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
-            {
-                int header_end = findHeaderLength();
-                
-                data = new byte[fs.Length - header_end];
-                fs.Seek(header_end, SeekOrigin.Begin);
-                fs.Read(data, 0, data.Length);
-            }
-
-            // write new header with image data
-            newfile = newfile != null ? newfile : file;
-            using (FileStream fs = new FileStream(newfile, FileMode.Create, FileAccess.Write))
-            {
-                //fs.Seek(0, SeekOrigin.Begin);
-                
-                using (BinaryWriter streamWriter = new BinaryWriter(fs, Encoding.ASCII))
-                {
-                    streamWriter.Write(header);
-                    streamWriter.Write(data);
-                }
-            }
-            
-        }
-
-        private int findHeaderLength()
-        {
-            int header_end = 0;
-            // extract image data from file
-            using (FileStream fs = new FileStream(current_file.FilePath, FileMode.Open, FileAccess.Read))
-            {
-                using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
-                {
-                    char[] buffer = new char[80];
-                    while (streamReader.Read(buffer, 0, buffer.Length) != 0)
-                    {
-                        header_end += 80;
-                        Console.WriteLine(header_end);
-
-                        string f = new string(buffer);
-                        if (f.Trim() == "END")
-                        {
-                            break;
-                        }
-                        
-                    }
-
-                    int pad_length = header_end % 2880;
-                    if (pad_length != 0)
-                    {
-                        header_end += (2880 - pad_length);
-                    }
-                }
-
-            }
-            Console.WriteLine("header length " + header_end);
-            return header_end;
+            FitsLoaded(this, file);
         }
 
         private void changeWindowTitle(string title = "No FITS loaded") {
@@ -374,35 +238,61 @@ namespace FitsHeaderEditor
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int size = -1;
-            DialogResult result = openFileDialog1.ShowDialog();
-            if (result == DialogResult.OK)
+            try
             {
-                loadFitsHeader(new FitsFile(openFileDialog1.FileName));
+                DialogResult result = openFileDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    loadFitsHeader(new FitsFile(openFileDialog1.FileName));
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (current_file != null)
+            try
             {
-                writeFitsHeader(current_file.FilePath);
+                current_file = current_file ?? throw new Exception("No file currently loaded.").Log();
+                dataGridView1.EndEdit();
+                dataGridView1.CurrentCell = null;
+
+                FitsUtil.WriteFitsHeader(headerBS.List, current_file.FilePath);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
             }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // set the filename to save to the current file
-            saveFileDialog1.FileName = current_file.Name;
-
-            DialogResult result = saveFileDialog1.ShowDialog();
-            string newfile = saveFileDialog1.FileName;
-
-            if ( result == DialogResult.OK && current_file != null)
+            try
             {
-                writeFitsHeader(current_file.FilePath, newfile);
-            }
+                // set the filename to save to the current file
+                current_file = current_file ?? throw new Exception("No file currently loaded.").Log();
 
+                saveFileDialog1.FileName = current_file.Name;
+
+                // commit all editing stuff
+                dataGridView1.EndEdit();
+                dataGridView1.CurrentCell = null;
+
+                DialogResult result = saveFileDialog1.ShowDialog();
+                string newfile = saveFileDialog1.FileName;
+
+                if (result == DialogResult.OK && current_file != null)
+                {
+                    FitsUtil.WriteFitsHeader(headerBS.List, current_file.FilePath, newfile);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -423,25 +313,46 @@ namespace FitsHeaderEditor
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openAbout();
+            try
+            {
+                openAbout();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void addHeaderFieldButton_Click(object sender, EventArgs e)
         {
-            var presetKeyword = headerPresetComboBox.Text;
-            if (!string.IsNullOrEmpty(presetKeyword))
+            try
             {
-                addHeaderField(new HeaderField(presetKeyword));
-            } else
-            {
-                addHeaderField();
+                var presetKeyword = headerPresetComboBox.Text;
+                if (!string.IsNullOrEmpty(presetKeyword))
+                {
+                    addHeaderField(new HeaderField(presetKeyword));
+                }
+                else
+                {
+                    addHeaderField();
+                }
             }
-            
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void removeHeaderFieldButton_Click(object sender, EventArgs e)
         {
-            removeHeaderField();
+            try
+            {
+                removeHeaderField();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -457,17 +368,23 @@ namespace FitsHeaderEditor
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            foreach (string file in files)
+            try
             {
-                var t = new FitsFile(file);
-                if (!fileHistoryBS.Contains(t))
-                    fileHistoryBS.Add(new FitsFile(file));
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                foreach (string file in files)
+                {
+                    var t = new FitsFile(file);
+                    if (!fileHistoryBS.Contains(t))
+                        fileHistoryBS.Add(new FitsFile(file));
+                }
+
+                loadFitsHeader(new FitsFile(files[0]));
             }
-            
-            loadFitsHeader(new FitsFile(files[0]));
-            
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void trimHeaderValueCheckbox_CheckedChanged(object sender, EventArgs e)
@@ -488,14 +405,29 @@ namespace FitsHeaderEditor
 
         private void fileHistoryListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selected_file = fileHistoryListBox.SelectedItem as FitsFile;
-            if (selected_file != null && selected_file != current_file )
-                loadFitsHeader(selected_file);
+            try
+            {
+                var selected_file = fileHistoryListBox.SelectedItem as FitsFile;
+                if (selected_file != null && selected_file != current_file)
+                {
+                    loadFitsHeader(selected_file);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            loadFitsHeader(current_file);
+            try {
+                loadFitsHeader(current_file);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

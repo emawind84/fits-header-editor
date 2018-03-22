@@ -438,7 +438,6 @@
             this.MinimumSize = new System.Drawing.Size(600, 500);
             this.Name = "Form1";
             this.Text = "Fits Header Editor";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
