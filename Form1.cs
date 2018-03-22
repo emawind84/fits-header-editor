@@ -166,6 +166,17 @@ namespace FitsHeaderEditor
                 if (field.isMandatory()) continue;
                 dataGridView1.Rows.RemoveAt(row.Index);
             }
+
+            foreach (DataGridViewCell cell in dataGridView1.SelectedCells) {
+                var row = cell.OwningRow;
+                // first check if the row is new
+                if (row.IsNewRow) continue;
+
+                HeaderField field = (HeaderField)row.DataBoundItem;
+
+                if (field.isMandatory()) continue;
+                dataGridView1.Rows.RemoveAt(row.Index);
+            }
             //datagrid.RemoveCurrent();
         }
 
