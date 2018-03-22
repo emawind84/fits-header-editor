@@ -21,6 +21,7 @@ namespace FitsHeaderEditor
         AboutBox1 about;
         event EventHandler<List<HeaderField>> HeaderRead;
         event EventHandler<FitsFile> FitsLoaded;
+        Settings settingsForm;
 
         public Form1(string filepath = "")
         {
@@ -61,6 +62,8 @@ namespace FitsHeaderEditor
             this.HeaderRead += WriteHeaderOnTextBox;
             this.HeaderRead += WriteHeaderOnDataGrid;
             this.FitsLoaded += UpdateHistoryList;
+
+            this.settingsForm = new Settings();
 
             changeWindowTitle();
 
@@ -452,6 +455,41 @@ namespace FitsHeaderEditor
         private void fileHistoryListClearButton_Click(object sender, EventArgs e)
         {
             fileHistoryBS.Clear();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                settingsForm.Owner = this;
+                settingsForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void AddDefaultHeaderButtonOnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var obj = new HeaderField("OBJECT", Properties.Settings.Default.HeaderFieldObject);
+                addHeaderField(obj);
+                obj = new HeaderField("TELESCOP", Properties.Settings.Default.HeaderFieldTelescope);
+                addHeaderField(obj);
+                obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument);
+                addHeaderField(obj);
+                obj = new HeaderField("OBSERVER", Properties.Settings.Default.HeaderFieldObserver);
+                addHeaderField(obj);
+                obj = new HeaderField("DATE-OBS", Properties.Settings.Default.HeaderFieldDate);
+                addHeaderField(obj);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+            
         }
     }
 }

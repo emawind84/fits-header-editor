@@ -12,7 +12,7 @@ namespace FitsHeaderEditor.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -32,6 +32,66 @@ namespace FitsHeaderEditor.Properties {
             }
             set {
                 this["TrimmedHeaderField"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HeaderFieldObject {
+            get {
+                return ((string)(this["HeaderFieldObject"]));
+            }
+            set {
+                this["HeaderFieldObject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HeaderFieldObserver {
+            get {
+                return ((string)(this["HeaderFieldObserver"]));
+            }
+            set {
+                this["HeaderFieldObserver"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HeaderFieldTelescope {
+            get {
+                return ((string)(this["HeaderFieldTelescope"]));
+            }
+            set {
+                this["HeaderFieldTelescope"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HeaderFieldDate {
+            get {
+                return ((string)(this["HeaderFieldDate"]));
+            }
+            set {
+                this["HeaderFieldDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HeaderFieldInstrument {
+            get {
+                return ((string)(this["HeaderFieldInstrument"]));
+            }
+            set {
+                this["HeaderFieldInstrument"] = value;
             }
         }
     }

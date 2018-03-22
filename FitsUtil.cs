@@ -117,7 +117,7 @@ namespace FitsHeaderEditor
                     while (streamReader.Read(buffer, 0, buffer.Length) != 0)
                     {
                         header_end += 80;
-                        Console.WriteLine(header_end);
+                        //Console.WriteLine(header_end);
 
                         string f = new string(buffer);
                         if (f.Trim() == "END")
