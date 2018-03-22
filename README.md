@@ -7,7 +7,7 @@ I know there are some applications out there that do this little task, but usual
 ## What you can do with this application:
 
 * Read header fields inside the primary data array of FITS files.
-* Add and modify header fields inside the primary data array of FITS files.
+* Add and remove header fields inside the primary data array of FITS files.
 
 ### What you can not do with this application:
 
