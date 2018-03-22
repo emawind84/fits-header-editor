@@ -46,7 +46,13 @@ namespace FitsHeaderEditor
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                //return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false);
+                if (attributes.Length == 0)
+                {
+                    return "";
+                }
+                return ((AssemblyFileVersionAttribute)attributes[0]).Version;
             }
         }
 
