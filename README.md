@@ -18,6 +18,5 @@ I know there are some applications out there that do this little task, but usual
 --------------
 
 #### TODO
-* Check if the file is a folder and do not load it
-* Check if the file is a valid fits file and do not load it
-* Add some kind of filter to the list of header fields
+* Don't accept not valid fit files (folders, or other types of file)
+* Add some kind of filter to the list of header fields (for searching through the header)
