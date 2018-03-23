@@ -30,7 +30,7 @@ namespace FitsHeaderEditor
             }
             else
             {
-                MessageBox.Show("Print Cancelled");
+                //MessageBox.Show("Print Cancelled");
             }
 
         }
