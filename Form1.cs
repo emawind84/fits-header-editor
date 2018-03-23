@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
 
 namespace FitsHeaderEditor
 {
@@ -481,6 +482,20 @@ namespace FitsHeaderEditor
                 obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument); addHeaderField(obj);
                 obj = new HeaderField("OBSERVER", Properties.Settings.Default.HeaderFieldObserver); addHeaderField(obj);
                 obj = new HeaderField("DATE-OBS", Properties.Settings.Default.HeaderFieldDate); addHeaderField(obj);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+            
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PrintUtil pu = new PrintUtil();
+                pu.PrintHeaders(consoleResultTextBox.Text);
             }
             catch (Exception ex)
             {
