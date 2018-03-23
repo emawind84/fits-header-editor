@@ -476,7 +476,7 @@ namespace FitsHeaderEditor
             try
             {
                 var obj = new HeaderField("", ""); addHeaderField(obj);
-                obj = new HeaderField("", "      / Added with FitsHeaderEditor"); addHeaderField(obj);
+                obj = new HeaderField("", "/ Added with FitsHeaderEditor"); addHeaderField(obj);
                 obj = new HeaderField("OBJECT", Properties.Settings.Default.HeaderFieldObject); addHeaderField(obj);
                 obj = new HeaderField("TELESCOP", Properties.Settings.Default.HeaderFieldTelescope); addHeaderField(obj);
                 obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument); addHeaderField(obj);
