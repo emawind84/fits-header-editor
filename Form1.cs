@@ -28,14 +28,14 @@ namespace FitsHeaderEditor
         {
             InitializeComponent();
 
-            reloadToolStripMenuItem.Image = Properties.Resources.Reload_Icon.ToBitmap();
+            //reloadToolStripMenuItem.Image = Properties.Resources.Reload_Icon.ToBitmap();
 
             Application.ApplicationExit += new EventHandler(SaveSettings);
 
             //PrintProductVersion();
 
             // load user settings
-            trimHeaderValueCheckbox.Checked = Properties.Settings.Default.TrimmedHeaderField;
+            trimHeaderValueCheckbox.Checked = false; //Properties.Settings.Default.TrimmedHeaderField;
 
             // prepare data for header grid view
             headerBS = new BindingSource();
@@ -160,6 +160,7 @@ namespace FitsHeaderEditor
 
         private void removeHeaderField()
         {
+            var rowsToDelete = new HashSet<int>();
             foreach ( DataGridViewRow row in dataGridView1.SelectedRows)
             {
                 // first check if the row is new
@@ -168,7 +169,7 @@ namespace FitsHeaderEditor
                 HeaderField field = (HeaderField)row.DataBoundItem;
                 
                 if (field.isMandatory()) continue;
-                dataGridView1.Rows.RemoveAt(row.Index);
+                rowsToDelete.Add(row.Index);
             }
 
             foreach (DataGridViewCell cell in dataGridView1.SelectedCells) {
@@ -179,9 +180,13 @@ namespace FitsHeaderEditor
                 HeaderField field = (HeaderField)row.DataBoundItem;
 
                 if (field.isMandatory()) continue;
-                dataGridView1.Rows.RemoveAt(row.Index);
+                rowsToDelete.Add(row.Index);
             }
-            //datagrid.RemoveCurrent();
+
+            foreach (int rowIndex in rowsToDelete.OrderByDescending(index => index)) // Delete in reverse order
+            {
+                dataGridView1.Rows.RemoveAt(rowIndex);
+            }
         }
 
         private void findHeaderField(string value)
@@ -338,19 +343,35 @@ namespace FitsHeaderEditor
             }
         }
 
+        private void addPresetHeaderField()
+        {
+            var presetKeyword = headerPresetComboBox.Text;
+            if (!string.IsNullOrEmpty(presetKeyword))
+            {
+                addHeaderField(new HeaderField(presetKeyword));
+            }
+            else
+            {
+                addHeaderField();
+            }
+
+            int newRowIndex = dataGridView1.RowCount - 2;
+            // Scroll to the new row
+            dataGridView1.FirstDisplayedScrollingRowIndex = newRowIndex;
+
+            // Focus on the second cell (index 1, assuming it exists)
+            if (dataGridView1.Columns.Count > 1)
+            {
+                dataGridView1.CurrentCell = dataGridView1.Rows[newRowIndex].Cells[1]; // Set focus on the second cell
+                dataGridView1.BeginEdit(true); // Begin editing the cell
+            }
+        }
+
         private void addHeaderFieldButton_Click(object sender, EventArgs e)
         {
             try
             {
-                var presetKeyword = headerPresetComboBox.Text;
-                if (!string.IsNullOrEmpty(presetKeyword))
-                {
-                    addHeaderField(new HeaderField(presetKeyword));
-                }
-                else
-                {
-                    addHeaderField();
-                }
+                addPresetHeaderField();
             }
             catch (Exception ex)
             {
@@ -414,6 +435,11 @@ namespace FitsHeaderEditor
 
             addHeaderFieldButton.Enabled = !trimHeaderValueCheckbox.Checked;
             removeHeaderFieldButton.Enabled = !trimHeaderValueCheckbox.Checked;
+            addDefaultHeaderButton.Enabled = !trimHeaderValueCheckbox.Checked;
+            addKeywordToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
+            removeKeywordsToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
+            addDefaultHeadersToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
+            pasteFromClipboardToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
 
             dataGridView1.Refresh();
         }
@@ -471,17 +497,22 @@ namespace FitsHeaderEditor
             }
         }
 
+        private void AddDefaultHeaders()
+        {
+            var obj = new HeaderField("", ""); addHeaderField(obj);
+            obj = new HeaderField("", "/ Added with FitsHeaderEditor"); addHeaderField(obj);
+            obj = new HeaderField("OBJECT", Properties.Settings.Default.HeaderFieldObject); addHeaderField(obj);
+            obj = new HeaderField("TELESCOP", Properties.Settings.Default.HeaderFieldTelescope); addHeaderField(obj);
+            obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument); addHeaderField(obj);
+            obj = new HeaderField("OBSERVER", Properties.Settings.Default.HeaderFieldObserver); addHeaderField(obj);
+            obj = new HeaderField("DATE-OBS", Properties.Settings.Default.HeaderFieldDate); addHeaderField(obj);
+        }
+
         private void AddDefaultHeaderButtonOnClick(object sender, EventArgs e)
         {
             try
             {
-                var obj = new HeaderField("", ""); addHeaderField(obj);
-                obj = new HeaderField("", "/ Added with FitsHeaderEditor"); addHeaderField(obj);
-                obj = new HeaderField("OBJECT", Properties.Settings.Default.HeaderFieldObject); addHeaderField(obj);
-                obj = new HeaderField("TELESCOP", Properties.Settings.Default.HeaderFieldTelescope); addHeaderField(obj);
-                obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument); addHeaderField(obj);
-                obj = new HeaderField("OBSERVER", Properties.Settings.Default.HeaderFieldObserver); addHeaderField(obj);
-                obj = new HeaderField("DATE-OBS", Properties.Settings.Default.HeaderFieldDate); addHeaderField(obj);
+                AddDefaultHeaders();
             }
             catch (Exception ex)
             {
@@ -502,6 +533,89 @@ namespace FitsHeaderEditor
                 ex.Log().Display();
             }
             
+        }
+
+        private void PasteClipboardDataToDataTable()
+        {
+            try
+            {
+                // Get clipboard text
+                string clipboardText = Clipboard.GetText();
+
+                if (!string.IsNullOrEmpty(clipboardText))
+                {
+                    // Split text into rows
+                    string[] rows = clipboardText.Split('\n');
+
+                    foreach (string row in rows)
+                    {
+                        if (!string.IsNullOrWhiteSpace(row))
+                        {
+                            // Split row into cells (assuming tab-delimited data)
+                            string[] cells = row.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (cells == null || cells.Length == 1)
+                                cells = FitsUtil.ProcessHeaderString(row);
+
+                            if (cells.Length > 1)
+                                addHeaderField(new HeaderField(cells[0], cells[1]));
+                            else
+                                addHeaderField(new HeaderField(cells[0]));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error pasting clipboard data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void pasteFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PasteClipboardDataToDataTable();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void addKeywordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                addPresetHeaderField();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void removeKeywordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                removeHeaderField();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void addDefaultHeadersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AddDefaultHeaders();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
         }
     }
 }

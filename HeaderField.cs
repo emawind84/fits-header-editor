@@ -68,12 +68,12 @@ namespace FitsHeaderEditor
 
         public bool isCommentaryKeyword()
         {
-            return NOVALUE_FIELD.Contains(this.key.Trim());
+            return this.key != null && NOVALUE_FIELD.Contains(this.key.Trim());
         }
 
         public bool isMandatory()
         {
-            return MANDATORY_FIELD.Contains(this.key.Trim());
+            return this.key != null && MANDATORY_FIELD.Contains(this.key.Trim());
         }
 
         public bool isReadOnly()

@@ -43,6 +43,27 @@ namespace FitsHeaderEditor
 
         }
 
+        public static string[] ProcessHeaderString(string headerString)
+        {
+            Console.WriteLine("Reading line: {0}", headerString);
+            if (headerString.Trim() == "END")
+            {
+                return null;
+            }
+
+            string key = headerString.Substring(0, 8);
+            string divisor = headerString.Substring(8, 2);
+            int value_start_idx = 10;
+
+            if (divisor != "= ")  // check if the field has no value
+            {
+                value_start_idx = 8;
+                Console.WriteLine("Found comment: {0}", headerString);
+            }
+            string value = headerString.Substring(value_start_idx, 70);
+            return new string[] { key, value };
+        }
+
         public static List<HeaderField> ReadFitsHeader(string filepath)
         {
             var f = new FileInfo(filepath);
@@ -57,24 +78,9 @@ namespace FitsHeaderEditor
                 buffer = new char[80];
                 while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)
                 {
-                    string result = new string(buffer);
-                    Console.WriteLine("Reading line: {0}", result);
-                    if (result.Trim() == "END")
-                    {
-                        break;
-                    }
-
-                    string key = result.Substring(0, 8);
-                    string divisor = result.Substring(8, 2);
-                    int value_start_idx = 10;
-
-                    if (divisor != "= ")  // check if the field has no value
-                    {
-                        value_start_idx = 8;
-                        Console.WriteLine("Found comment: {0}", result);
-                    }
-                    string value = result.Substring(value_start_idx, 70);
-                    header.Add(new HeaderField(key, value));
+                    string[] parsedHeader = ProcessHeaderString(new string(buffer));
+                    if (parsedHeader == null) break;
+                    header.Add(new HeaderField(parsedHeader[0], parsedHeader[1]));
                 }
 
             }

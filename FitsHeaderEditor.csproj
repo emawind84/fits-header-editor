@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -112,10 +112,22 @@
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Trash.cs" />
+    <None Include="Resources\about.bmp" />
     <Content Include="Resources\add.ico" />
+    <None Include="Resources\DeleteTableRow_16x.png" />
+    <None Include="Resources\AddRow_16x.png" />
+    <None Include="Resources\PasteAppend_16x.png" />
+    <None Include="Resources\ImageLoader_16x.png" />
+    <None Include="Resources\OpenFile_16x.png" />
+    <None Include="Resources\Print_16x.png" />
+    <None Include="Resources\Exit_16x.png" />
+    <None Include="Resources\DefaultIcon_16x.png" />
     <Content Include="Resources\reload.ico" />
     <Content Include="Resources\Reload_Icon.ico" />
     <Content Include="Resources\remove.ico" />
+    <None Include="Resources\SaveAll_16x.png" />
+    <None Include="Resources\Save_16x.png" />
+    <None Include="Resources\Settings_16x.png" />
     <Content Include="Resources\trash.ico" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FitsHeaderEditor")]
+[assembly: AssemblyTitle("Fits Header Editor")]
 [assembly: AssemblyDescription("Read and Write FITS Header")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Emanuele Disco")]
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.4.2")]
-[assembly: AssemblyFileVersion("0.5.0")]
+[assembly: AssemblyFileVersion("0.6.0")]
