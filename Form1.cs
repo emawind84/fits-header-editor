@@ -155,7 +155,7 @@ namespace FitsHeaderEditor
             {
                 about = new AboutBox1();
             }
-            about.Show();
+            about.ShowDialog(this);
         }
 
         private void addHeaderField(HeaderField field = null) {
