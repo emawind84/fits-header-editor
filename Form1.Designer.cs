@@ -88,7 +88,6 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.AddExtension = true;
             this.saveFileDialog1.DefaultExt = "fits";
             this.saveFileDialog1.Filter = "FITS Files (*.fit;*.fits)|*.fit;*.fits";
             // 
@@ -534,7 +533,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -571,6 +569,7 @@
         private System.Windows.Forms.ToolStripMenuItem removeKeywordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addDefaultHeadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteFromClipboardToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

@@ -31,6 +31,7 @@ namespace FitsHeaderEditor
             //reloadToolStripMenuItem.Image = Properties.Resources.Reload_Icon.ToBitmap();
 
             Application.ApplicationExit += new EventHandler(SaveSettings);
+            Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
 
             //PrintProductVersion();
 
@@ -72,6 +73,11 @@ namespace FitsHeaderEditor
             {
                 loadFitsHeader(new FitsFile(filepath));
             }
+        }
+
+        private void OnApplicationExit(object sender, EventArgs e)
+        {
+            notifyIcon1.Dispose();
         }
 
         // used to keep a single instance of the application
