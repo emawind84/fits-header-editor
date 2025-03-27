@@ -111,7 +111,16 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextInput.Designer.cs">
+      <DependentUpon>TextInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="Trash.cs" />
+    <EmbeddedResource Include="TextInput.resx">
+      <DependentUpon>TextInput.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Resources\about.bmp" />
     <Content Include="Resources\add.ico" />
     <None Include="Resources\DeleteTableRow_16x.png" />
@@ -122,6 +131,8 @@
     <None Include="Resources\Print_16x.png" />
     <None Include="Resources\Exit_16x.png" />
     <None Include="Resources\DefaultIcon_16x.png" />
+    <None Include="Resources\ClearWindowContent_16x.png" />
+    <None Include="Resources\PYWebApplication_16x.png" />
     <Content Include="Resources\reload.ico" />
     <Content Include="Resources\Reload_Icon.ico" />
     <Content Include="Resources\remove.ico" />

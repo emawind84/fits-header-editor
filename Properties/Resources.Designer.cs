@@ -103,6 +103,16 @@ namespace FitsHeaderEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ClearWindowContent_16x {
+            get {
+                object obj = ResourceManager.GetObject("ClearWindowContent_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DefaultIcon_16x {
             get {
                 object obj = ResourceManager.GetObject("DefaultIcon_16x", resourceCulture);
@@ -166,6 +176,16 @@ namespace FitsHeaderEditor.Properties {
         internal static System.Drawing.Bitmap Print_16x {
             get {
                 object obj = ResourceManager.GetObject("Print_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PYWebApplication_16x {
+            get {
+                object obj = ResourceManager.GetObject("PYWebApplication_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

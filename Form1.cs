@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
+using System.Net.Http;
 
 namespace FitsHeaderEditor
 {
@@ -23,6 +24,9 @@ namespace FitsHeaderEditor
         event EventHandler<List<HeaderField>> HeaderRead;
         event EventHandler<FitsFile> FitsLoaded;
         Settings settingsForm;
+
+        // HttpClient is intended to be instantiated once per application, rather than per-use. See Remarks.
+        public static readonly HttpClient client = new HttpClient();
 
         public Form1(string filepath = "")
         {
@@ -44,6 +48,7 @@ namespace FitsHeaderEditor
             headerBS.AllowNew = true;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = headerBS;
+            dataGridView1.ReadOnly = true;
 
             // prepare data for file history list box
             ObservableCollection<FitsFile> items = new ObservableCollection<FitsFile>();
@@ -130,7 +135,7 @@ namespace FitsHeaderEditor
             
             changeWindowTitle(file.Name);  // change window title
 
-            var header = FitsUtil.ReadFitsHeader(current_file.FilePath);
+            var header = FitsUtil.ReadFitsHeaderFromFile(current_file.FilePath);
             HeaderRead(this, header);
             FitsLoaded(this, file);
         }
@@ -543,36 +548,32 @@ namespace FitsHeaderEditor
 
         private void PasteClipboardDataToDataTable()
         {
-            try
+            // Get clipboard text
+            string clipboardText = Clipboard.GetText();
+            if (!string.IsNullOrEmpty(clipboardText))
             {
-                // Get clipboard text
-                string clipboardText = Clipboard.GetText();
+                var obj = new HeaderField("", "");
+                addHeaderField(obj);
+                obj = new HeaderField("", "/ Added with FitsHeaderEditor");
+                addHeaderField(obj);
 
-                if (!string.IsNullOrEmpty(clipboardText))
+                // Split text into rows
+                string[] rows = clipboardText.Split('\n');
+
+                foreach (string row in rows)
                 {
-                    // Split text into rows
-                    string[] rows = clipboardText.Split('\n');
-
-                    foreach (string row in rows)
+                    if (!string.IsNullOrWhiteSpace(row))
                     {
-                        if (!string.IsNullOrWhiteSpace(row))
-                        {
-                            // Split row into cells (assuming tab-delimited data)
-                            string[] cells = row.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                            if (cells == null || cells.Length == 1)
-                                cells = FitsUtil.ProcessHeaderString(row);
-
-                            if (cells.Length > 1)
-                                addHeaderField(new HeaderField(cells[0], cells[1]));
-                            else
-                                addHeaderField(new HeaderField(cells[0]));
-                        }
+                        // Split row into cells (assuming tab-delimited data)
+                        string[] cells = row.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (cells == null || cells.Length == 1)
+                            cells = FitsUtil.ProcessHeaderString(row);
+                        else if (cells.Length > 1)
+                            addHeaderField(new HeaderField(cells[0], cells[1]));
+                        else
+                            addHeaderField(new HeaderField(cells[0]));
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error pasting clipboard data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -617,6 +618,45 @@ namespace FitsHeaderEditor
             try
             {
                 AddDefaultHeaders();
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void pasteFromURIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TextInput textInput = new TextInput();
+                textInput.TextSent += PasteFromURI_TextSent;
+                textInput.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void PasteFromURI_TextSent(object sender, Stream stream)
+        {
+            var headers = FitsUtil.ReadFitsHeaderFromStream(stream);
+            var obj = new HeaderField("", "");
+            addHeaderField(obj);
+            obj = new HeaderField("", "/ Added with FitsHeaderEditor");
+            addHeaderField(obj);
+            foreach (HeaderField field in headers)
+            {
+                addHeaderField(field);
+            }
+        }
+
+        private void clearHeaderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                headerBS.Clear();
             }
             catch (Exception ex)
             {

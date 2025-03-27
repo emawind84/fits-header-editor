@@ -64,16 +64,24 @@ namespace FitsHeaderEditor
             return new string[] { key, value };
         }
 
-        public static List<HeaderField> ReadFitsHeader(string filepath)
+        public static List<HeaderField> ReadFitsHeaderFromFile(string filepath)
         {
             var f = new FileInfo(filepath);
             if (!f.Exists) throw new FileNotFoundException().Log();
 
             char[] buffer = null;
-            List<HeaderField> header = new List<HeaderField>();
             FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
 
-            using (StreamReader streamReader = new StreamReader(fs, Encoding.ASCII))
+            List<HeaderField> header = ReadFitsHeaderFromStream(fs);
+            return header;
+        }
+
+        public static List<HeaderField> ReadFitsHeaderFromStream(Stream stream)
+        {
+            char[] buffer = null;
+            List<HeaderField> header = new List<HeaderField>();
+            
+            using (StreamReader streamReader = new StreamReader(stream, Encoding.ASCII))
             {
                 buffer = new char[80];
                 while (streamReader.ReadBlock(buffer, 0, (int)buffer.Length) != 0)

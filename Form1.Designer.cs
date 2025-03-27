@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -51,6 +51,7 @@
             this.removeKeywordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDefaultHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteFromURIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -72,6 +73,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
+            this.clearHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -210,7 +212,9 @@
             this.addKeywordToolStripMenuItem,
             this.removeKeywordsToolStripMenuItem,
             this.addDefaultHeadersToolStripMenuItem,
-            this.pasteFromClipboardToolStripMenuItem});
+            this.pasteFromClipboardToolStripMenuItem,
+            this.pasteFromURIToolStripMenuItem,
+            this.clearHeaderToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -220,7 +224,7 @@
             this.addKeywordToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.AddRow_16x;
             this.addKeywordToolStripMenuItem.Name = "addKeywordToolStripMenuItem";
             this.addKeywordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.addKeywordToolStripMenuItem.Text = "Add Keyword";
             this.addKeywordToolStripMenuItem.Click += new System.EventHandler(this.addKeywordToolStripMenuItem_Click);
             // 
@@ -229,7 +233,7 @@
             this.removeKeywordsToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DeleteTableRow_16x;
             this.removeKeywordsToolStripMenuItem.Name = "removeKeywordsToolStripMenuItem";
             this.removeKeywordsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.removeKeywordsToolStripMenuItem.Text = "Remove Keyword(s)";
             this.removeKeywordsToolStripMenuItem.Click += new System.EventHandler(this.removeKeywordsToolStripMenuItem_Click);
             // 
@@ -237,7 +241,7 @@
             // 
             this.addDefaultHeadersToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DefaultIcon_16x;
             this.addDefaultHeadersToolStripMenuItem.Name = "addDefaultHeadersToolStripMenuItem";
-            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.addDefaultHeadersToolStripMenuItem.Text = "Add Default Headers";
             this.addDefaultHeadersToolStripMenuItem.Click += new System.EventHandler(this.addDefaultHeadersToolStripMenuItem_Click);
             // 
@@ -246,9 +250,17 @@
             this.pasteFromClipboardToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PasteAppend_16x;
             this.pasteFromClipboardToolStripMenuItem.Name = "pasteFromClipboardToolStripMenuItem";
             this.pasteFromClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
             this.pasteFromClipboardToolStripMenuItem.Text = "Paste From Clipboard";
             this.pasteFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.pasteFromClipboardToolStripMenuItem_Click);
+            // 
+            // pasteFromURIToolStripMenuItem
+            // 
+            this.pasteFromURIToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PYWebApplication_16x;
+            this.pasteFromURIToolStripMenuItem.Name = "pasteFromURIToolStripMenuItem";
+            this.pasteFromURIToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromURIToolStripMenuItem.Text = "Paste From URL";
+            this.pasteFromURIToolStripMenuItem.Click += new System.EventHandler(this.pasteFromURIToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -405,8 +417,8 @@
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle7;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -414,8 +426,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle8;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -495,6 +507,14 @@
             this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
             this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
             // 
+            // clearHeaderToolStripMenuItem
+            // 
+            this.clearHeaderToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
+            this.clearHeaderToolStripMenuItem.Name = "clearHeaderToolStripMenuItem";
+            this.clearHeaderToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.clearHeaderToolStripMenuItem.Text = "Clear Header";
+            this.clearHeaderToolStripMenuItem.Click += new System.EventHandler(this.clearHeaderToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -570,6 +590,8 @@
         private System.Windows.Forms.ToolStripMenuItem addDefaultHeadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteFromClipboardToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem pasteFromURIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearHeaderToolStripMenuItem;
     }
 }
 
