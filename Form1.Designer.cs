@@ -88,9 +88,9 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.AddExtension = false;
+            this.saveFileDialog1.AddExtension = true;
             this.saveFileDialog1.DefaultExt = "fits";
-            this.saveFileDialog1.Filter = "*.fit|*.fits";
+            this.saveFileDialog1.Filter = "FITS Files (*.fit;*.fits)|*.fit;*.fits";
             // 
             // menuStrip1
             // 
@@ -221,7 +221,7 @@
             this.addKeywordToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.AddRow_16x;
             this.addKeywordToolStripMenuItem.Name = "addKeywordToolStripMenuItem";
             this.addKeywordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addKeywordToolStripMenuItem.Text = "Add Keyword";
             this.addKeywordToolStripMenuItem.Click += new System.EventHandler(this.addKeywordToolStripMenuItem_Click);
             // 
@@ -230,7 +230,7 @@
             this.removeKeywordsToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DeleteTableRow_16x;
             this.removeKeywordsToolStripMenuItem.Name = "removeKeywordsToolStripMenuItem";
             this.removeKeywordsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.removeKeywordsToolStripMenuItem.Text = "Remove Keyword(s)";
             this.removeKeywordsToolStripMenuItem.Click += new System.EventHandler(this.removeKeywordsToolStripMenuItem_Click);
             // 
@@ -238,7 +238,7 @@
             // 
             this.addDefaultHeadersToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DefaultIcon_16x;
             this.addDefaultHeadersToolStripMenuItem.Name = "addDefaultHeadersToolStripMenuItem";
-            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addDefaultHeadersToolStripMenuItem.Text = "Add Default Headers";
             this.addDefaultHeadersToolStripMenuItem.Click += new System.EventHandler(this.addDefaultHeadersToolStripMenuItem_Click);
             // 
@@ -247,7 +247,7 @@
             this.pasteFromClipboardToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PasteAppend_16x;
             this.pasteFromClipboardToolStripMenuItem.Name = "pasteFromClipboardToolStripMenuItem";
             this.pasteFromClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromClipboardToolStripMenuItem.Text = "Paste From Clipboard";
             this.pasteFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.pasteFromClipboardToolStripMenuItem_Click);
             // 
