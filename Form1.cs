@@ -32,8 +32,6 @@ namespace FitsHeaderEditor
         {
             InitializeComponent();
 
-            //reloadToolStripMenuItem.Image = Properties.Resources.Reload_Icon.ToBitmap();
-
             Application.ApplicationExit += new EventHandler(SaveSettings);
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
 
@@ -178,7 +176,7 @@ namespace FitsHeaderEditor
 
                 HeaderField field = (HeaderField)row.DataBoundItem;
                 
-                if (field.isMandatory()) continue;
+                //if (field.isMandatory()) continue;
                 rowsToDelete.Add(row.Index);
             }
 
@@ -189,7 +187,7 @@ namespace FitsHeaderEditor
 
                 HeaderField field = (HeaderField)row.DataBoundItem;
 
-                if (field.isMandatory()) continue;
+                //if (field.isMandatory()) continue;
                 rowsToDelete.Add(row.Index);
             }
 
@@ -405,7 +403,7 @@ namespace FitsHeaderEditor
         private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             HeaderField field = (HeaderField)e.Row.DataBoundItem;
-            if (field.isMandatory()) e.Cancel = true;
+            //if (field.isMandatory()) e.Cancel = true;
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
