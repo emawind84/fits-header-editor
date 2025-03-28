@@ -48,7 +48,6 @@ namespace FitsHeaderEditor
             headerBS.AllowNew = true;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = headerBS;
-            dataGridView1.ReadOnly = true;
 
             // prepare data for file history list box
             ObservableCollection<FitsFile> items = new ObservableCollection<FitsFile>();
@@ -59,7 +58,7 @@ namespace FitsHeaderEditor
             fileHistoryListBox.DataSource = fileHistoryBS;
             
             saveToolStripMenuItem.Enabled = false;
-            saveAsToolStripMenuItem.Enabled = false;
+            //saveAsToolStripMenuItem.Enabled = false;
 
             // allow dragging file inside the window
             this.AllowDrop = true;
@@ -304,10 +303,9 @@ namespace FitsHeaderEditor
             try
             {
                 // set the filename to save to the current file
-                current_file = current_file ?? throw new Exception("No file currently loaded.").Log();
-
-                saveFileDialog1.FileName = current_file.Name;
-
+                //current_file = current_file ?? throw new Exception("No file currently loaded.").Log();
+                saveFileDialog1.FileName = current_file?.Name;
+                
                 // commit all editing stuff
                 dataGridView1.EndEdit();
                 dataGridView1.CurrentCell = null;
@@ -315,9 +313,9 @@ namespace FitsHeaderEditor
                 DialogResult result = saveFileDialog1.ShowDialog();
                 string newfile = saveFileDialog1.FileName;
 
-                if (result == DialogResult.OK && current_file != null)
+                if (result == DialogResult.OK)
                 {
-                    FitsUtil.WriteFitsHeader(headerBS.List, current_file.FilePath, newfile);
+                    FitsUtil.WriteFitsHeader(headerBS.List, current_file?.FilePath, newfile);
                 }
             }
             catch (Exception ex)
@@ -383,6 +381,7 @@ namespace FitsHeaderEditor
             try
             {
                 addPresetHeaderField();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -395,6 +394,7 @@ namespace FitsHeaderEditor
             try
             {
                 removeHeaderField();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -524,6 +524,7 @@ namespace FitsHeaderEditor
             try
             {
                 AddDefaultHeaders();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -582,6 +583,7 @@ namespace FitsHeaderEditor
             try
             {
                 PasteClipboardDataToDataTable();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -594,6 +596,7 @@ namespace FitsHeaderEditor
             try
             {
                 addPresetHeaderField();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -606,6 +609,7 @@ namespace FitsHeaderEditor
             try
             {
                 removeHeaderField();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -618,6 +622,7 @@ namespace FitsHeaderEditor
             try
             {
                 AddDefaultHeaders();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
             }
             catch (Exception ex)
             {
@@ -650,6 +655,7 @@ namespace FitsHeaderEditor
             {
                 addHeaderField(field);
             }
+            WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
         }
 
         private void clearHeaderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -657,6 +663,32 @@ namespace FitsHeaderEditor
             try
             {
                 headerBS.Clear();
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void pasteFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = openFileDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    var headers = FitsUtil.ReadFitsHeaderFromFile(openFileDialog1.FileName);
+                    var obj = new HeaderField("", "");
+                    addHeaderField(obj);
+                    obj = new HeaderField("", "/ Added with FitsHeaderEditor");
+                    addHeaderField(obj);
+                    foreach (HeaderField field in headers)
+                    {
+                        addHeaderField(field);
+                    }
+                    WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
+                }
             }
             catch (Exception ex)
             {

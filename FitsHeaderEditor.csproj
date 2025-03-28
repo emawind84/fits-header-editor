@@ -133,6 +133,8 @@
     <None Include="Resources\DefaultIcon_16x.png" />
     <None Include="Resources\ClearWindowContent_16x.png" />
     <None Include="Resources\PYWebApplication_16x.png" />
+    <None Include="Resources\ImportPackage_16x.png" />
+    <None Include="Resources\ASX_FileToTable_blue_16x_.png" />
     <Content Include="Resources\reload.ico" />
     <Content Include="Resources\Reload_Icon.ico" />
     <Content Include="Resources\remove.ico" />

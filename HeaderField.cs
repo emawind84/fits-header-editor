@@ -101,7 +101,7 @@ namespace FitsHeaderEditor
 
         private string valueIndicator()
         {
-            if (this.key.Trim() == "END") return "";
+            if (this.key == null || this.key.Trim() == "END") return "";
             if (this.isCommentaryKeyword()) return "";
             return "= ";
         }

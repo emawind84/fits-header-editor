@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -52,6 +52,7 @@
             this.addDefaultHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFromURIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -73,7 +74,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
-            this.clearHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -105,7 +106,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(754, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(966, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -212,6 +213,7 @@
             this.addKeywordToolStripMenuItem,
             this.removeKeywordsToolStripMenuItem,
             this.addDefaultHeadersToolStripMenuItem,
+            this.pasteFromFileToolStripMenuItem,
             this.pasteFromClipboardToolStripMenuItem,
             this.pasteFromURIToolStripMenuItem,
             this.clearHeaderToolStripMenuItem});
@@ -224,7 +226,7 @@
             this.addKeywordToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.AddRow_16x;
             this.addKeywordToolStripMenuItem.Name = "addKeywordToolStripMenuItem";
             this.addKeywordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addKeywordToolStripMenuItem.Text = "Add Keyword";
             this.addKeywordToolStripMenuItem.Click += new System.EventHandler(this.addKeywordToolStripMenuItem_Click);
             // 
@@ -233,7 +235,7 @@
             this.removeKeywordsToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DeleteTableRow_16x;
             this.removeKeywordsToolStripMenuItem.Name = "removeKeywordsToolStripMenuItem";
             this.removeKeywordsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.removeKeywordsToolStripMenuItem.Text = "Remove Keyword(s)";
             this.removeKeywordsToolStripMenuItem.Click += new System.EventHandler(this.removeKeywordsToolStripMenuItem_Click);
             // 
@@ -241,7 +243,7 @@
             // 
             this.addDefaultHeadersToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DefaultIcon_16x;
             this.addDefaultHeadersToolStripMenuItem.Name = "addDefaultHeadersToolStripMenuItem";
-            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addDefaultHeadersToolStripMenuItem.Text = "Add Default Headers";
             this.addDefaultHeadersToolStripMenuItem.Click += new System.EventHandler(this.addDefaultHeadersToolStripMenuItem_Click);
             // 
@@ -250,7 +252,7 @@
             this.pasteFromClipboardToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PasteAppend_16x;
             this.pasteFromClipboardToolStripMenuItem.Name = "pasteFromClipboardToolStripMenuItem";
             this.pasteFromClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromClipboardToolStripMenuItem.Text = "Paste From Clipboard";
             this.pasteFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.pasteFromClipboardToolStripMenuItem_Click);
             // 
@@ -258,9 +260,17 @@
             // 
             this.pasteFromURIToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PYWebApplication_16x;
             this.pasteFromURIToolStripMenuItem.Name = "pasteFromURIToolStripMenuItem";
-            this.pasteFromURIToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromURIToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromURIToolStripMenuItem.Text = "Paste From URL";
             this.pasteFromURIToolStripMenuItem.Click += new System.EventHandler(this.pasteFromURIToolStripMenuItem_Click);
+            // 
+            // clearHeaderToolStripMenuItem
+            // 
+            this.clearHeaderToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
+            this.clearHeaderToolStripMenuItem.Name = "clearHeaderToolStripMenuItem";
+            this.clearHeaderToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.clearHeaderToolStripMenuItem.Text = "Clear Header";
+            this.clearHeaderToolStripMenuItem.Click += new System.EventHandler(this.clearHeaderToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -311,7 +321,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(534, 479);
+            this.tabPage1.Size = new System.Drawing.Size(746, 586);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Edit Header";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -324,7 +334,7 @@
             this.panel1.Controls.Add(this.addHeaderFieldButton);
             this.panel1.Controls.Add(this.headerPresetComboBox);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(6, 435);
+            this.panel1.Location = new System.Drawing.Point(6, 542);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(522, 40);
             this.panel1.TabIndex = 32;
@@ -407,7 +417,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(522, 423);
+            this.dataGridView1.Size = new System.Drawing.Size(734, 530);
             this.dataGridView1.TabIndex = 25;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
@@ -417,8 +427,8 @@
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle11;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -426,8 +436,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle12;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -435,7 +445,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.trimHeaderValueCheckbox);
-            this.groupBox1.Location = new System.Drawing.Point(548, 386);
+            this.groupBox1.Location = new System.Drawing.Point(760, 493);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(194, 101);
             this.groupBox1.TabIndex = 28;
@@ -465,7 +475,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 33);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(542, 508);
+            this.tabControl1.Size = new System.Drawing.Size(754, 615);
             this.tabControl1.TabIndex = 22;
             // 
             // fileHistoryListBox
@@ -474,9 +484,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fileHistoryListBox.FormattingEnabled = true;
             this.fileHistoryListBox.HorizontalScrollbar = true;
-            this.fileHistoryListBox.Location = new System.Drawing.Point(548, 58);
+            this.fileHistoryListBox.Location = new System.Drawing.Point(760, 58);
             this.fileHistoryListBox.Name = "fileHistoryListBox";
-            this.fileHistoryListBox.Size = new System.Drawing.Size(194, 290);
+            this.fileHistoryListBox.Size = new System.Drawing.Size(194, 394);
             this.fileHistoryListBox.Sorted = true;
             this.fileHistoryListBox.TabIndex = 27;
             this.fileHistoryListBox.SelectedIndexChanged += new System.EventHandler(this.fileHistoryListBox_SelectedIndexChanged);
@@ -485,7 +495,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(545, 35);
+            this.label2.Location = new System.Drawing.Point(757, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 29;
@@ -499,28 +509,31 @@
             // fileHistoryListClearButton
             // 
             this.fileHistoryListClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileHistoryListClearButton.Location = new System.Drawing.Point(667, 357);
+            this.fileHistoryListClearButton.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
+            this.fileHistoryListClearButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.fileHistoryListClearButton.Location = new System.Drawing.Point(876, 464);
             this.fileHistoryListClearButton.Name = "fileHistoryListClearButton";
-            this.fileHistoryListClearButton.Size = new System.Drawing.Size(75, 23);
+            this.fileHistoryListClearButton.Size = new System.Drawing.Size(78, 23);
             this.fileHistoryListClearButton.TabIndex = 30;
             this.fileHistoryListClearButton.Text = "Clear List";
+            this.fileHistoryListClearButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
             this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
             // 
-            // clearHeaderToolStripMenuItem
+            // pasteFromFileToolStripMenuItem
             // 
-            this.clearHeaderToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
-            this.clearHeaderToolStripMenuItem.Name = "clearHeaderToolStripMenuItem";
-            this.clearHeaderToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.clearHeaderToolStripMenuItem.Text = "Clear Header";
-            this.clearHeaderToolStripMenuItem.Click += new System.EventHandler(this.clearHeaderToolStripMenuItem_Click);
+            this.pasteFromFileToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ASX_FileToTable_blue_16x_;
+            this.pasteFromFileToolStripMenuItem.Name = "pasteFromFileToolStripMenuItem";
+            this.pasteFromFileToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromFileToolStripMenuItem.Text = "Paste From File";
+            this.pasteFromFileToolStripMenuItem.Click += new System.EventHandler(this.pasteFromFileToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(754, 542);
+            this.ClientSize = new System.Drawing.Size(966, 649);
             this.Controls.Add(this.fileHistoryListClearButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
@@ -592,6 +605,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem pasteFromURIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearHeaderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteFromFileToolStripMenuItem;
     }
 }
 

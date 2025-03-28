@@ -16,16 +16,19 @@ namespace FitsHeaderEditor
             //byte[] header = encoding.GetBytes(consoleResultTextBox.Text.Replace(System.Environment.NewLine, ""));
 
             byte[] header = updateFitsHeader(headerCollection);
-            byte[] data;
+            byte[] data = new byte[0];
 
-            // extract image data from file
-            using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+            if (file != null)
             {
-                int header_end = findHeaderLength(file);
+                // extract image data from file
+                using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+                {
+                    int header_end = findHeaderLength(file);
 
-                data = new byte[fs.Length - header_end];
-                fs.Seek(header_end, SeekOrigin.Begin);
-                fs.Read(data, 0, data.Length);
+                    data = new byte[fs.Length - header_end];
+                    fs.Seek(header_end, SeekOrigin.Begin);
+                    fs.Read(data, 0, data.Length);
+                }
             }
 
             // write new header with image data

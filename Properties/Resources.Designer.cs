@@ -103,6 +103,16 @@ namespace FitsHeaderEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ASX_FileToTable_blue_16x_ {
+            get {
+                object obj = ResourceManager.GetObject("ASX_FileToTable_blue_16x_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ClearWindowContent_16x {
             get {
                 object obj = ResourceManager.GetObject("ClearWindowContent_16x", resourceCulture);
@@ -146,6 +156,16 @@ namespace FitsHeaderEditor.Properties {
         internal static System.Drawing.Bitmap ImageLoader_16x {
             get {
                 object obj = ResourceManager.GetObject("ImageLoader_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ImportPackage_16x {
+            get {
+                object obj = ResourceManager.GetObject("ImportPackage_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
