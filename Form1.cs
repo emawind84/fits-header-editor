@@ -695,5 +695,17 @@ namespace FitsHeaderEditor
                 ex.Log().Display();
             }
         }
+
+        private void dataGridView1_CellValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
     }
 }

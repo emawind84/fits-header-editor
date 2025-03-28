@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -50,6 +50,7 @@
             this.addKeywordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeKeywordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addDefaultHeadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteFromURIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +75,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
-            this.pasteFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -247,6 +247,14 @@
             this.addDefaultHeadersToolStripMenuItem.Text = "Add Default Headers";
             this.addDefaultHeadersToolStripMenuItem.Click += new System.EventHandler(this.addDefaultHeadersToolStripMenuItem_Click);
             // 
+            // pasteFromFileToolStripMenuItem
+            // 
+            this.pasteFromFileToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ASX_FileToTable_blue_16x_;
+            this.pasteFromFileToolStripMenuItem.Name = "pasteFromFileToolStripMenuItem";
+            this.pasteFromFileToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.pasteFromFileToolStripMenuItem.Text = "Paste From File";
+            this.pasteFromFileToolStripMenuItem.Click += new System.EventHandler(this.pasteFromFileToolStripMenuItem_Click);
+            // 
             // pasteFromClipboardToolStripMenuItem
             // 
             this.pasteFromClipboardToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PasteAppend_16x;
@@ -292,7 +300,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(534, 479);
+            this.tabPage2.Size = new System.Drawing.Size(746, 586);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Raw View";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -310,7 +318,7 @@
             this.consoleResultTextBox.Name = "consoleResultTextBox";
             this.consoleResultTextBox.ReadOnly = true;
             this.consoleResultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.consoleResultTextBox.Size = new System.Drawing.Size(526, 472);
+            this.consoleResultTextBox.Size = new System.Drawing.Size(738, 579);
             this.consoleResultTextBox.TabIndex = 25;
             this.consoleResultTextBox.WordWrap = false;
             // 
@@ -420,6 +428,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(734, 530);
             this.dataGridView1.TabIndex = 25;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            this.dataGridView1.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValidated);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
             // 
@@ -427,8 +436,8 @@
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle3;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -436,8 +445,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle4;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -519,14 +528,6 @@
             this.fileHistoryListClearButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
             this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
-            // 
-            // pasteFromFileToolStripMenuItem
-            // 
-            this.pasteFromFileToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ASX_FileToTable_blue_16x_;
-            this.pasteFromFileToolStripMenuItem.Name = "pasteFromFileToolStripMenuItem";
-            this.pasteFromFileToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
-            this.pasteFromFileToolStripMenuItem.Text = "Paste From File";
-            this.pasteFromFileToolStripMenuItem.Click += new System.EventHandler(this.pasteFromFileToolStripMenuItem_Click);
             // 
             // Form1
             // 

@@ -94,9 +94,9 @@ namespace FitsHeaderEditor
                 value_end_idx = 72;
 
             return 
-                key.PadRight(8).Substring(0, 8)
+                Key.PadRight(8).Substring(0, 8)
                 + valueIndicator() 
-                + value.PadRight(value_end_idx).Substring(0, value_end_idx);
+                + Value.PadRight(value_end_idx).Substring(0, value_end_idx);
         }
 
         private string valueIndicator()
