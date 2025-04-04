@@ -111,6 +111,7 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="StringExtension.cs" />
     <Compile Include="TextInput.cs">
       <SubType>Form</SubType>
     </Compile>

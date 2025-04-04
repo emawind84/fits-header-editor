@@ -54,8 +54,8 @@ namespace FitsHeaderEditor
                 return null;
             }
 
-            string key = headerString.Substring(0, 8);
-            string divisor = headerString.Substring(8, 2);
+            string key = headerString.SafeSubstring(0, 8, ' ');
+            string divisor = headerString.SafeSubstring(8, 2, ' ');
             int value_start_idx = 10;
 
             if (divisor != "= ")  // check if the field has no value
@@ -63,7 +63,7 @@ namespace FitsHeaderEditor
                 value_start_idx = 8;
                 Console.WriteLine("Found comment: {0}", headerString);
             }
-            string value = headerString.Substring(value_start_idx, 70);
+            string value = headerString.SafeSubstring(value_start_idx, 70, ' ');
             return new string[] { key, value };
         }
 
@@ -155,5 +155,6 @@ namespace FitsHeaderEditor
             Console.WriteLine("header length " + header_end);
             return header_end;
         }
+
     }
 }
