@@ -75,6 +75,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
+            this.insertAtSelectionCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -226,7 +227,7 @@
             this.addKeywordToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.AddRow_16x;
             this.addKeywordToolStripMenuItem.Name = "addKeywordToolStripMenuItem";
             this.addKeywordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addKeywordToolStripMenuItem.Text = "Add Keyword";
             this.addKeywordToolStripMenuItem.Click += new System.EventHandler(this.addKeywordToolStripMenuItem_Click);
             // 
@@ -235,7 +236,7 @@
             this.removeKeywordsToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DeleteTableRow_16x;
             this.removeKeywordsToolStripMenuItem.Name = "removeKeywordsToolStripMenuItem";
             this.removeKeywordsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.removeKeywordsToolStripMenuItem.Text = "Remove Keyword(s)";
             this.removeKeywordsToolStripMenuItem.Click += new System.EventHandler(this.removeKeywordsToolStripMenuItem_Click);
             // 
@@ -243,7 +244,7 @@
             // 
             this.addDefaultHeadersToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DefaultIcon_16x;
             this.addDefaultHeadersToolStripMenuItem.Name = "addDefaultHeadersToolStripMenuItem";
-            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.addDefaultHeadersToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addDefaultHeadersToolStripMenuItem.Text = "Add Default Headers";
             this.addDefaultHeadersToolStripMenuItem.Click += new System.EventHandler(this.addDefaultHeadersToolStripMenuItem_Click);
             // 
@@ -252,7 +253,7 @@
             this.pasteFromFileToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ASX_FileToTable_blue_16x_;
             this.pasteFromFileToolStripMenuItem.Name = "pasteFromFileToolStripMenuItem";
             this.pasteFromFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.pasteFromFileToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromFileToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromFileToolStripMenuItem.Text = "Paste From File";
             this.pasteFromFileToolStripMenuItem.Click += new System.EventHandler(this.pasteFromFileToolStripMenuItem_Click);
             // 
@@ -261,7 +262,7 @@
             this.pasteFromClipboardToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PasteAppend_16x;
             this.pasteFromClipboardToolStripMenuItem.Name = "pasteFromClipboardToolStripMenuItem";
             this.pasteFromClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromClipboardToolStripMenuItem.Text = "Paste From Clipboard";
             this.pasteFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.pasteFromClipboardToolStripMenuItem_Click);
             // 
@@ -270,7 +271,7 @@
             this.pasteFromURIToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.PYWebApplication_16x;
             this.pasteFromURIToolStripMenuItem.Name = "pasteFromURIToolStripMenuItem";
             this.pasteFromURIToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
-            this.pasteFromURIToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.pasteFromURIToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.pasteFromURIToolStripMenuItem.Text = "Paste From URL";
             this.pasteFromURIToolStripMenuItem.Click += new System.EventHandler(this.pasteFromURIToolStripMenuItem_Click);
             // 
@@ -278,7 +279,7 @@
             // 
             this.clearHeaderToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
             this.clearHeaderToolStripMenuItem.Name = "clearHeaderToolStripMenuItem";
-            this.clearHeaderToolStripMenuItem.Size = new System.Drawing.Size(233, 26);
+            this.clearHeaderToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.clearHeaderToolStripMenuItem.Text = "Clear Header";
             this.clearHeaderToolStripMenuItem.Click += new System.EventHandler(this.clearHeaderToolStripMenuItem_Click);
             // 
@@ -455,6 +456,7 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.insertAtSelectionCheckBox);
             this.groupBox1.Controls.Add(this.trimHeaderValueCheckbox);
             this.groupBox1.Location = new System.Drawing.Point(760, 493);
             this.groupBox1.Name = "groupBox1";
@@ -530,6 +532,17 @@
             this.fileHistoryListClearButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
             this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
+            // 
+            // insertAtSelectionCheckBox
+            // 
+            this.insertAtSelectionCheckBox.AutoSize = true;
+            this.insertAtSelectionCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.insertAtSelectionCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.insertAtSelectionCheckBox.Name = "insertAtSelectionCheckBox";
+            this.insertAtSelectionCheckBox.Size = new System.Drawing.Size(115, 18);
+            this.insertAtSelectionCheckBox.TabIndex = 29;
+            this.insertAtSelectionCheckBox.Text = "Insert at selection";
+            this.insertAtSelectionCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -609,6 +622,7 @@
         private System.Windows.Forms.ToolStripMenuItem pasteFromURIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearHeaderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteFromFileToolStripMenuItem;
+        private System.Windows.Forms.CheckBox insertAtSelectionCheckBox;
     }
 }
 

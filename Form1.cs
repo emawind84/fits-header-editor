@@ -156,14 +156,20 @@ namespace FitsHeaderEditor
         }
 
         private void addHeaderField(HeaderField field = null) {
-            if (field != null)
+            var currentIndex = headerBS.Position;
+            if (field == null)
+            {
+                field = new HeaderField("", "");
+            }
+            if (insertAtSelectionCheckBox.Checked)
+            {
+                headerBS.Insert(currentIndex, field);
+            }
+            else
             {
                 headerBS.Add(field);
-            } else
-            {
-                headerBS.AddNew();
             }
-            
+            headerBS.ResetBindings(false);
         }
 
         private void removeHeaderField()
@@ -449,6 +455,8 @@ namespace FitsHeaderEditor
             removeKeywordsToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
             addDefaultHeadersToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
             pasteFromClipboardToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
+            pasteFromFileToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
+            pasteFromURIToolStripMenuItem.Enabled = !trimHeaderValueCheckbox.Checked;
 
             dataGridView1.Refresh();
         }
