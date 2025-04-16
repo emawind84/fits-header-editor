@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -69,13 +69,13 @@
             this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.insertAtSelectionCheckBox = new System.Windows.Forms.CheckBox();
             this.trimHeaderValueCheckbox = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.fileHistoryListBox = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
-            this.insertAtSelectionCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -226,7 +226,7 @@
             // 
             this.addKeywordToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.AddRow_16x;
             this.addKeywordToolStripMenuItem.Name = "addKeywordToolStripMenuItem";
-            this.addKeywordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.addKeywordToolStripMenuItem.ShortcutKeyDisplayString = "Ins";
             this.addKeywordToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.addKeywordToolStripMenuItem.Text = "Add Keyword";
             this.addKeywordToolStripMenuItem.Click += new System.EventHandler(this.addKeywordToolStripMenuItem_Click);
@@ -235,7 +235,7 @@
             // 
             this.removeKeywordsToolStripMenuItem.Image = global::FitsHeaderEditor.Properties.Resources.DeleteTableRow_16x;
             this.removeKeywordsToolStripMenuItem.Name = "removeKeywordsToolStripMenuItem";
-            this.removeKeywordsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.removeKeywordsToolStripMenuItem.ShortcutKeyDisplayString = "Del";
             this.removeKeywordsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.removeKeywordsToolStripMenuItem.Text = "Remove Keyword(s)";
             this.removeKeywordsToolStripMenuItem.Click += new System.EventHandler(this.removeKeywordsToolStripMenuItem_Click);
@@ -413,7 +413,8 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -434,13 +435,14 @@
             this.dataGridView1.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValidated);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             this.dataGridView1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView1_UserDeletingRow);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
             // key
             // 
             this.key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.key.DataPropertyName = "key";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.key.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.key.DefaultCellStyle = dataGridViewCellStyle3;
             this.key.FillWeight = 40F;
             this.key.HeaderText = "Keyword";
             this.key.Name = "key";
@@ -448,8 +450,8 @@
             // value
             // 
             this.value.DataPropertyName = "value";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.value.DefaultCellStyle = dataGridViewCellStyle4;
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
@@ -464,6 +466,17 @@
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
+            // 
+            // insertAtSelectionCheckBox
+            // 
+            this.insertAtSelectionCheckBox.AutoSize = true;
+            this.insertAtSelectionCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.insertAtSelectionCheckBox.Location = new System.Drawing.Point(6, 43);
+            this.insertAtSelectionCheckBox.Name = "insertAtSelectionCheckBox";
+            this.insertAtSelectionCheckBox.Size = new System.Drawing.Size(115, 18);
+            this.insertAtSelectionCheckBox.TabIndex = 29;
+            this.insertAtSelectionCheckBox.Text = "Insert at selection";
+            this.insertAtSelectionCheckBox.UseVisualStyleBackColor = true;
             // 
             // trimHeaderValueCheckbox
             // 
@@ -532,17 +545,6 @@
             this.fileHistoryListClearButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.fileHistoryListClearButton.UseVisualStyleBackColor = true;
             this.fileHistoryListClearButton.Click += new System.EventHandler(this.fileHistoryListClearButton_Click);
-            // 
-            // insertAtSelectionCheckBox
-            // 
-            this.insertAtSelectionCheckBox.AutoSize = true;
-            this.insertAtSelectionCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.insertAtSelectionCheckBox.Location = new System.Drawing.Point(6, 43);
-            this.insertAtSelectionCheckBox.Name = "insertAtSelectionCheckBox";
-            this.insertAtSelectionCheckBox.Size = new System.Drawing.Size(115, 18);
-            this.insertAtSelectionCheckBox.TabIndex = 29;
-            this.insertAtSelectionCheckBox.Text = "Insert at selection";
-            this.insertAtSelectionCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

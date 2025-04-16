@@ -156,12 +156,14 @@ namespace FitsHeaderEditor
         }
 
         private void addHeaderField(HeaderField field = null) {
+            if (dataGridView1.IsCurrentCellInEditMode) return;
+
             var currentIndex = headerBS.Position;
             if (field == null)
             {
                 field = new HeaderField("", "");
             }
-            if (insertAtSelectionCheckBox.Checked)
+            if (insertAtSelectionCheckBox.Checked && currentIndex > 0)
             {
                 headerBS.Insert(currentIndex, field);
             }
@@ -174,6 +176,8 @@ namespace FitsHeaderEditor
 
         private void removeHeaderField()
         {
+            if (dataGridView1.IsCurrentCellInEditMode) return;
+
             var rowsToDelete = new HashSet<int>();
             foreach ( DataGridViewRow row in dataGridView1.SelectedRows)
             {
@@ -368,7 +372,11 @@ namespace FitsHeaderEditor
                 addHeaderField();
             }
 
-            int newRowIndex = dataGridView1.RowCount - 2;
+            int newRowIndex = dataGridView1.RowCount - 1;
+            if (insertAtSelectionCheckBox.Checked && headerBS.Position > 0)
+            {
+                newRowIndex = headerBS.Position - 1;
+            }
             // Scroll to the new row
             dataGridView1.FirstDisplayedScrollingRowIndex = newRowIndex;
 
@@ -516,8 +524,7 @@ namespace FitsHeaderEditor
 
         private void AddDefaultHeaders()
         {
-            var obj = new HeaderField("", ""); addHeaderField(obj);
-            obj = new HeaderField("", "/ Added with FitsHeaderEditor"); addHeaderField(obj);
+            var obj = new HeaderField("COMMENT", "/ Added with FitsHeaderEditor"); addHeaderField(obj);
             obj = new HeaderField("OBJECT", Properties.Settings.Default.HeaderFieldObject); addHeaderField(obj);
             obj = new HeaderField("TELESCOP", Properties.Settings.Default.HeaderFieldTelescope); addHeaderField(obj);
             obj = new HeaderField("INSTRUME", Properties.Settings.Default.HeaderFieldInstrument); addHeaderField(obj);
@@ -559,9 +566,7 @@ namespace FitsHeaderEditor
             string clipboardText = Clipboard.GetText();
             if (!string.IsNullOrEmpty(clipboardText))
             {
-                var obj = new HeaderField("", "");
-                addHeaderField(obj);
-                obj = new HeaderField("", "/ Added with FitsHeaderEditor");
+                var obj = new HeaderField("COMMENT", "/ Added with FitsHeaderEditor");
                 addHeaderField(obj);
 
                 // Split text into rows
@@ -716,5 +721,29 @@ namespace FitsHeaderEditor
                 ex.Log().Display();
             }
         }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.CurrentCell != null && dataGridView1.CurrentCell.IsInEditMode) return;
+
+                if (e.KeyCode == Keys.Delete)
+                {
+                    removeHeaderField();
+                    WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
+                }
+                else if (e.KeyCode == Keys.Insert)
+                {
+                    addPresetHeaderField();
+                    WriteHeaderOnTextBox(this, (List<HeaderField>)headerBS.DataSource);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
     }
 }
