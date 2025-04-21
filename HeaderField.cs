@@ -57,8 +57,12 @@ namespace FitsHeaderEditor
 
         public HeaderField(string key, string value = null)
         {
-            this.key = key == null ? "" : key;
-            this.value = value == null ? "" : value;
+            this.key = key == null ? "" : SanitizeKey(key).SafeSubstring(0, 8, ' ');
+            int value_end_idx = 70;
+            if (string.IsNullOrEmpty(valueIndicator()))
+                value_end_idx = 72;
+
+            this.value = value == null ? "" : SanitizeValue(value).SafeSubstring(0, value_end_idx, ' ');
         }
 
         public bool isEmpty()
@@ -89,14 +93,10 @@ namespace FitsHeaderEditor
 
         public override string ToString()
         {
-            int value_end_idx = 70;
-            if (string.IsNullOrEmpty(valueIndicator()))
-                value_end_idx = 72;
-
-            return 
-                Key.PadRight(8).Substring(0, 8)
-                + valueIndicator() 
-                + Value.PadRight(value_end_idx).Substring(0, value_end_idx);
+            return
+                Key
+                + valueIndicator()
+                + Value;
         }
 
         private string valueIndicator()
@@ -104,6 +104,52 @@ namespace FitsHeaderEditor
             if (this.key == null || this.key.Trim() == "END") return "";
             if (this.isCommentaryKeyword()) return "";
             return "= ";
+        }
+
+        private string SanitizeValue(string input)
+        {
+            StringBuilder sanitizedString = new StringBuilder();
+
+            foreach (char character in input)
+            {
+                if (character >= 32 && character <= 126)
+                {
+                    sanitizedString.Append(character);
+                }
+                else
+                {
+                    sanitizedString.Append('-');
+                }
+            }
+
+            return sanitizedString.ToString();
+        }
+
+        private string SanitizeKey(string input)
+        {
+            StringBuilder sanitizedString = new StringBuilder();
+
+            foreach (char character in input)
+            {
+                if (character >= 48 && character <= 57)
+                {
+                    sanitizedString.Append(character);
+                }
+                else if (character >= 65 && character <= 90)
+                {
+                    sanitizedString.Append(character);
+                }
+                else if (character == 95 || character == 45 || character == 32)
+                {
+                    sanitizedString.Append(character);
+                }
+                else
+                {
+                    sanitizedString.Append('-');
+                }
+            }
+
+            return sanitizedString.ToString();
         }
     }
 }

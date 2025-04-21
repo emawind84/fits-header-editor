@@ -54,16 +54,33 @@ namespace FitsHeaderEditor
                 return null;
             }
 
-            string key = headerString.SafeSubstring(0, 8, ' ');
-            string divisor = headerString.SafeSubstring(8, 2, ' ');
-            int value_start_idx = 10;
+            string key, value = "";
 
-            if (divisor != "= ")  // check if the field has no value
+            // Split row into cells (assuming tab-delimited data)
+            string[] cells = headerString.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            if (cells == null || cells.Length == 1)
             {
-                value_start_idx = 8;
-                Console.WriteLine("Found comment: {0}", headerString);
+                key = headerString.SafeSubstring(0, 8, ' ');
+                string divisor = headerString.SafeSubstring(8, 2, ' ');
+                int value_start_idx = 10;
+
+                if (divisor != "= ")  // check if the field has no value
+                {
+                    value_start_idx = 8;
+                    Console.WriteLine("Found comment: {0}", headerString);
+                }
+                value = headerString.SafeSubstring(value_start_idx, 72, ' ');
             }
-            string value = headerString.SafeSubstring(value_start_idx, 70, ' ');
+            else if (cells.Length > 1)
+            {
+                key = cells[0];
+                value = cells[1];
+            }
+            else
+            {
+                key = cells[0];
+            }
+            
             return new string[] { key, value };
         }
 

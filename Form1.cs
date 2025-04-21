@@ -576,17 +576,11 @@ namespace FitsHeaderEditor
                 {
                     if (!string.IsNullOrEmpty(row))
                     {
-                        // Split row into cells (assuming tab-delimited data)
-                        string[] cells = row.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (cells == null || cells.Length == 1)
+                        string[] cells = FitsUtil.ProcessHeaderString(row);
+                        if (cells != null)
                         {
-                            cells = FitsUtil.ProcessHeaderString(row);
                             addHeaderField(new HeaderField(cells[0], cells[1]));
                         }
-                        else if (cells.Length > 1)
-                            addHeaderField(new HeaderField(cells[0], cells[1]));
-                        else
-                            addHeaderField(new HeaderField(cells[0]));
                     }
                 }
             }
