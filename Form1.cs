@@ -31,6 +31,7 @@ namespace FitsHeaderEditor
         public Form1(string filepath = "")
         {
             InitializeComponent();
+            InitializeTrayIcon();
 
             Application.ApplicationExit += new EventHandler(SaveSettings);
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);

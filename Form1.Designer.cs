@@ -1,4 +1,7 @@
-﻿namespace FitsHeaderEditor
+﻿using System;
+using System.Windows.Forms;
+
+namespace FitsHeaderEditor
 {
     partial class Form1
     {
@@ -577,6 +580,18 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void InitializeTrayIcon()
+        {
+            // Create ContextMenuStrip
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
+            ToolStripMenuItem exitMenuItem = new ToolStripMenuItem("Exit");
+            exitMenuItem.Click += exitToolStripMenuItem_Click;
+            contextMenu.Items.Add(exitMenuItem);
+
+            // Assign ContextMenuStrip to NotifyIcon
+            notifyIcon1.ContextMenuStrip = contextMenu;
         }
 
         #endregion
