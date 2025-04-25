@@ -1,6 +1,6 @@
 # Fits Header Editor
 
-![image](https://github.com/user-attachments/assets/70dea152-e2c1-4148-bb35-473a10d0d7c5)
+![image](https://github.com/user-attachments/assets/61ad3094-3b5d-478d-9778-23964156ee86)
 
 
 This is a really small application that allow you to see and edit the primary data array inside Flexible Image Transport System images.
