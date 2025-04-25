@@ -8,7 +8,7 @@ namespace FitsHeaderEditor
 {
     public class HeaderField
     {
-        private static string[] NOVALUE_FIELD = { "COMMENT", "HISTORY", "" };
+        private static string[] NOVALUE_FIELD = { "COMMENT", "HISTORY", "CONTINUE", "HIERARCH", "" };
         private static string[] MANDATORY_FIELD = { "SIMPLE", "END", "BITPIX" };
 
         // readonly flag
