@@ -12,6 +12,11 @@ I know there are some applications out there that do this little task, but usual
 * Read header fields inside the primary data array of FITS files.
 * Add and remove header fields inside the primary data array of FITS files.
 
+* Add, remove or edit single header or copy entire headers from other sources, paste from URL, clipboard or local file.
+
+![image](https://github.com/user-attachments/assets/cf032a61-f54b-4cda-9665-6e705a5b0480)
+
+
 ### What you can not do with this application:
 
 * See the image inside the FITS files.
