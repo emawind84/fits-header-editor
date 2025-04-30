@@ -267,9 +267,9 @@ namespace FitsHeaderEditor
                 //e.Cancel = true;
                 //dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
             }
-            else if (col == 1 && value.Length != 70)
+            else if (col == 1 && value.Length != 72)
             {
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value.PadRight(70).Substring(0, 70);
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value.PadRight(72).Substring(0, 70);
                 //e.Cancel = true;
                 //dataGridView1.Rows[e.RowIndex].ErrorText = "Wrong length!";
             }

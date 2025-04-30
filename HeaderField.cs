@@ -93,10 +93,14 @@ namespace FitsHeaderEditor
 
         public override string ToString()
         {
+            int value_end_idx = 70;
+            if (string.IsNullOrEmpty(valueIndicator()))
+                value_end_idx = 72;
+
             return
-                Key
+                SanitizeKey(key).SafeSubstring(0, 8, ' ')
                 + valueIndicator()
-                + Value;
+                + SanitizeValue(Value).SafeSubstring(0, value_end_idx, ' '); ;
         }
 
         private string valueIndicator()
@@ -129,7 +133,7 @@ namespace FitsHeaderEditor
         {
             StringBuilder sanitizedString = new StringBuilder();
 
-            foreach (char character in input)
+            foreach (char character in input.ToUpper())
             {
                 if (character >= 48 && character <= 57)
                 {
