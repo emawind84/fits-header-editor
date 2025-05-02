@@ -164,7 +164,7 @@ namespace FitsHeaderEditor
             {
                 field = new HeaderField("", "");
             }
-            if (insertAtSelectionCheckBox.Checked && currentIndex > 0)
+            if (insertAtSelectionCheckBox.Checked && currentIndex >= 0)
             {
                 headerBS.Insert(currentIndex, field);
             }
@@ -374,7 +374,7 @@ namespace FitsHeaderEditor
             }
 
             int newRowIndex = dataGridView1.RowCount - 1;
-            if (insertAtSelectionCheckBox.Checked && headerBS.Position > 0)
+            if (insertAtSelectionCheckBox.Checked && headerBS.Position >= 0)
             {
                 newRowIndex = headerBS.Position - 1;
             }
