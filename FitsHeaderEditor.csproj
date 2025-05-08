@@ -142,6 +142,7 @@
     <None Include="Resources\SaveAll_16x.png" />
     <None Include="Resources\Save_16x.png" />
     <None Include="Resources\Settings_16x.png" />
+    <None Include="Resources\Search_16x.png" />
     <Content Include="Resources\trash.ico" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
