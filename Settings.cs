@@ -23,6 +23,8 @@ namespace FitsHeaderEditor
             ObjectTextBox.Text = Properties.Settings.Default.HeaderFieldObject;
             ObserverTextBox.Text = Properties.Settings.Default.HeaderFieldObserver;
             TelescopeTextBox.Text = Properties.Settings.Default.HeaderFieldTelescope;
+            numericUpDown1.Value = (decimal)Properties.Settings.Default.FontSize;
+
         }
 
         private void SettingOKButton_Click(object sender, EventArgs e)
@@ -32,9 +34,10 @@ namespace FitsHeaderEditor
             Properties.Settings.Default.HeaderFieldObject = ObjectTextBox.Text;
             Properties.Settings.Default.HeaderFieldObserver = ObserverTextBox.Text;
             Properties.Settings.Default.HeaderFieldTelescope = TelescopeTextBox.Text;
+            Properties.Settings.Default.FontSize = (float)numericUpDown1.Value;
 
             this.Hide();
         }
-        
+
     }
 }

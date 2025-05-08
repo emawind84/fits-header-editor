@@ -72,6 +72,8 @@ namespace FitsHeaderEditor
 
             changeWindowTitle();
 
+            UpdateFontSize();
+
             if (filepath != string.Empty)
             {
                 loadFitsHeader(new FitsFile(filepath));
@@ -516,6 +518,7 @@ namespace FitsHeaderEditor
             {
                 settingsForm.Owner = this;
                 settingsForm.ShowDialog();
+                UpdateFontSize();
             }
             catch (Exception ex)
             {
@@ -740,5 +743,110 @@ namespace FitsHeaderEditor
             }
         }
 
+        private void SearchHeader(string word)
+        {
+            int lastSelectedIndex = -1;
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                row.Selected = false;
+                lastSelectedIndex = row.Index;
+            }
+            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            {
+                cell.Selected = false;
+            }
+            DataGridViewRow selectedRow = null;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {   if (row.Index <= lastSelectedIndex) continue;
+                HeaderField field = (HeaderField)row.DataBoundItem;
+                if (field == null || field.Key == null) continue;
+                if (field.Key.ToUpper().Contains(word.ToUpper()) 
+                    || field.Value.ToUpper().Contains(word.ToUpper()))
+                {
+                    selectedRow = row;
+                    break;
+                }
+            }
+
+            if (selectedRow == null)
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Index > lastSelectedIndex) continue;
+                    HeaderField field = (HeaderField)row.DataBoundItem;
+                    if (field == null || field.Key == null) continue;
+                    if (field.Key.ToUpper().Contains(word.ToUpper())
+                        || field.Value.ToUpper().Contains(word.ToUpper()))
+                    {
+                        selectedRow = row;
+                        break;
+                    }
+                }
+            }
+
+            if (selectedRow != null)
+            {
+                selectedRow.Selected = true;
+                dataGridView1.FirstDisplayedScrollingRowIndex = selectedRow.Index;
+            }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SearchHeader(searchTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    SearchHeader(searchTextBox.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log().Display();
+            }
+        }
+
+        private void numericUpDown1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        public void UpdateFontSize()
+        {
+            float fontSize = Properties.Settings.Default.FontSize;
+            Font font = new Font("Courier New", fontSize);
+            consoleResultTextBox.Font = font;
+            dataGridView1.DefaultCellStyle.Font = font;
+            dataGridView1.AlternatingRowsDefaultCellStyle.Font = font;
+            dataGridView1.RowTemplate.DefaultCellStyle.Font = font;
+            dataGridView1.RowTemplate.Height = (int)(fontSize * 2.5);
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Height = (int)(fontSize * 2.5);
+                row.DefaultCellStyle.Font = font;
+            }
+        }
     }
 }
