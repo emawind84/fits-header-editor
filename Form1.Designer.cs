@@ -66,17 +66,18 @@ namespace FitsHeaderEditor
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.consoleResultTextBox = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.searchButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
             this.addDefaultHeaderButton = new System.Windows.Forms.Button();
             this.removeHeaderFieldButton = new System.Windows.Forms.Button();
             this.addHeaderFieldButton = new System.Windows.Forms.Button();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
             this.headerPresetComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.searchTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.insertAtSelectionCheckBox = new System.Windows.Forms.CheckBox();
             this.trimHeaderValueCheckbox = new System.Windows.Forms.CheckBox();
@@ -86,7 +87,6 @@ namespace FitsHeaderEditor
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.fileHistoryListClearButton = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -118,7 +118,7 @@ namespace FitsHeaderEditor
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(966, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1026, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -343,26 +343,15 @@ namespace FitsHeaderEditor
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(746, 589);
+            this.tabPage1.Size = new System.Drawing.Size(806, 589);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Edit Header";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // searchButton
-            // 
-            this.searchButton.Image = global::FitsHeaderEditor.Properties.Resources.Search_16x;
-            this.searchButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.searchButton.Location = new System.Drawing.Point(643, 15);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(88, 23);
-            this.searchButton.TabIndex = 34;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.searchButton);
             this.panel1.Controls.Add(this.addDefaultHeaderButton);
@@ -373,8 +362,31 @@ namespace FitsHeaderEditor
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(6, 545);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(734, 40);
+            this.panel1.Size = new System.Drawing.Size(793, 40);
             this.panel1.TabIndex = 32;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(557, 1);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 13);
+            this.label3.TabIndex = 35;
+            this.label3.Text = "Search key or value";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchButton.Image = global::FitsHeaderEditor.Properties.Resources.Search_16x;
+            this.searchButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.searchButton.Location = new System.Drawing.Point(698, 14);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(88, 23);
+            this.searchButton.TabIndex = 34;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // addDefaultHeaderButton
             // 
@@ -414,6 +426,15 @@ namespace FitsHeaderEditor
             this.addHeaderFieldButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeaderFieldButton.UseVisualStyleBackColor = true;
             this.addHeaderFieldButton.Click += new System.EventHandler(this.addHeaderFieldButton_Click);
+            // 
+            // searchTextBox
+            // 
+            this.searchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchTextBox.Location = new System.Drawing.Point(557, 16);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(135, 20);
+            this.searchTextBox.TabIndex = 33;
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
             // 
             // headerPresetComboBox
             // 
@@ -476,7 +497,7 @@ namespace FitsHeaderEditor
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView1.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(734, 533);
+            this.dataGridView1.Size = new System.Drawing.Size(794, 533);
             this.dataGridView1.TabIndex = 25;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -503,20 +524,12 @@ namespace FitsHeaderEditor
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             // 
-            // searchTextBox
-            // 
-            this.searchTextBox.Location = new System.Drawing.Point(502, 17);
-            this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(135, 20);
-            this.searchTextBox.TabIndex = 33;
-            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
-            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.insertAtSelectionCheckBox);
             this.groupBox1.Controls.Add(this.trimHeaderValueCheckbox);
-            this.groupBox1.Location = new System.Drawing.Point(760, 493);
+            this.groupBox1.Location = new System.Drawing.Point(820, 493);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(194, 101);
             this.groupBox1.TabIndex = 28;
@@ -556,7 +569,7 @@ namespace FitsHeaderEditor
             this.tabControl1.Location = new System.Drawing.Point(0, 33);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(754, 615);
+            this.tabControl1.Size = new System.Drawing.Size(814, 615);
             this.tabControl1.TabIndex = 22;
             // 
             // fileHistoryListBox
@@ -565,7 +578,7 @@ namespace FitsHeaderEditor
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fileHistoryListBox.FormattingEnabled = true;
             this.fileHistoryListBox.HorizontalScrollbar = true;
-            this.fileHistoryListBox.Location = new System.Drawing.Point(760, 58);
+            this.fileHistoryListBox.Location = new System.Drawing.Point(820, 58);
             this.fileHistoryListBox.Name = "fileHistoryListBox";
             this.fileHistoryListBox.Size = new System.Drawing.Size(194, 394);
             this.fileHistoryListBox.Sorted = true;
@@ -576,7 +589,7 @@ namespace FitsHeaderEditor
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(757, 35);
+            this.label2.Location = new System.Drawing.Point(817, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 29;
@@ -592,7 +605,7 @@ namespace FitsHeaderEditor
             this.fileHistoryListClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.fileHistoryListClearButton.Image = global::FitsHeaderEditor.Properties.Resources.ClearWindowContent_16x;
             this.fileHistoryListClearButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.fileHistoryListClearButton.Location = new System.Drawing.Point(876, 464);
+            this.fileHistoryListClearButton.Location = new System.Drawing.Point(936, 464);
             this.fileHistoryListClearButton.Name = "fileHistoryListClearButton";
             this.fileHistoryListClearButton.Size = new System.Drawing.Size(78, 23);
             this.fileHistoryListClearButton.TabIndex = 30;
@@ -607,21 +620,12 @@ namespace FitsHeaderEditor
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(502, 2);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 13);
-            this.label3.TabIndex = 35;
-            this.label3.Text = "Search key or value";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(966, 649);
+            this.ClientSize = new System.Drawing.Size(1026, 649);
             this.Controls.Add(this.fileHistoryListClearButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
@@ -629,7 +633,7 @@ namespace FitsHeaderEditor
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(800, 499);
+            this.MinimumSize = new System.Drawing.Size(1024, 499);
             this.Name = "Form1";
             this.Text = "Fits Header Editor";
             this.menuStrip1.ResumeLayout(false);
